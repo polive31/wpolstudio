@@ -1,0 +1,104 @@
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Temporary & Private folders
+*tmp/
+*do_not_publish/
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts & backup files
+*.lnk
+*.bak
+
+*bak/
+*deprecated/
+
+# =========================
+# Operating System Files
+# =========================
+
+# OSX
+# =========================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+#node modules
+# node_modules
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# =========================
+# Custom directories for Go�tu.org
+# =========================
+
+/*
+!.gitignore
+
+!extensions/
+
+!peepso/
+peepso/*
+!peepso/custom/
+peepso/plugins/*
+
+!images/
+
+!csn/
+csn/*
+!csn/custom/
+
+# unignore languages folder
+!/languages/
+/languages/*
+!/languages/themes
+!/languages/plugins
+languages/plugins/*
+!languages/plugins/*fr_FR.*
+!languages/plugins/custom*
+!languages/plugins/friendso*
+!languages/plugins/msgso*
+!languages/plugins/peepso*
+
+!/themes/
+/themes/*
+!/themes/foodiepro-2.1.8/
+/themes/foodiepro-2.1.8/backups/*
+/themes/foodiepro-2.1.8/images/Backup/*
+/themes/foodiepro-2.1.8/project/snapshots/*
+/themes/foodiepro-2.1.8/project/npm/*
+/themes/foodiepro-2.1.8/project/node_modules/*
+
+!/plugins/
+/plugins/*
+!/plugins/tiny-widget-manager/
