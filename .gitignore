@@ -92,12 +92,8 @@ languages/plugins/*
 
 !/themes/
 /themes/*
-!/themes/foodiepro-2.1.8/
-/themes/foodiepro-2.1.8/backups/*
-/themes/foodiepro-2.1.8/images/Backup/*
-/themes/foodiepro-2.1.8/project/snapshots/*
-/themes/foodiepro-2.1.8/project/npm/*
-/themes/foodiepro-2.1.8/project/node_modules/*
+!/themes/generatepress/
+
 
 !/plugins/
 /plugins/*
