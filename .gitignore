@@ -67,16 +67,9 @@ Temporary Items
 
 !extensions/
 
-!peepso/
-peepso/*
-!peepso/custom/
-peepso/plugins/*
-
 !images/
 
-!csn/
-csn/*
-!csn/custom/
+!/composer.json
 
 # unignore languages folder
 !/languages/
