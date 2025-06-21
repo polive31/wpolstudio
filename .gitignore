@@ -91,3 +91,4 @@ languages/plugins/*
 !/plugins/
 /plugins/*
 !/plugins/tiny-widget-manager/
+!/plugins/smart-post-customizer/
