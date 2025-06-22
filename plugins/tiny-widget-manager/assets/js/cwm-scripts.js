@@ -1,9 +1,9 @@
-(function($) {
+(function ($) {
     function initCwmWidgetControls(context) {
         $(context).find('.cwm-widget-controls').each(function () {
             const $container = $(this);
 
-            // Onglets
+            // Tabs
             $container.find('.cwm-tab-nav li').off('click').on('click', function () {
                 const tab = $(this).data('tab');
                 $container.find('.cwm-tab-nav li').removeClass('active');
@@ -12,35 +12,80 @@
                 $container.find(`.cwm-tab-content[data-tab="${tab}"]`).addClass('active').show();
             });
 
-            // Selectize
+
+            // Selectize with dropdown list
             $container.find('.cwm-selectize').each(function () {
                 if (!this.selectize) {
                     $(this).selectize({
                         plugins: ['remove_button'],
                         delimiter: ',',
-                        persist: false
+                        persist: false,
+                        render: {
+                            option: function (data, escape) {
+                                const level = Number(data.level) || 0;
+                                const indent = '&nbsp;'.repeat(level * 4);
+                                return `<div class="option">${indent}${escape(data.text)}</div>`;
+                            }
+                        }
                     });
                 }
             });
 
-            // Mise à jour JSON
-            $container.find('.cwm-mode, .cwm-selectize').off('change').on('change', function () {
-                const data = {};
 
-                $container.find('.cwm-tab-content').each(function () {
-                    const $tab = $(this);
-                    const type = $tab.data('tab');
-                    const mode = $tab.find('.cwm-mode').val();
-                    const items = $tab.find('.cwm-selectize').val() || [];
-                    data[type] = { mode, items };
-                });
+            // Selectize with autocomplete
+            // $container.find('.cwm-selectize.autocomplete').each(function () {
+            //     if (!this.selectize) {
+            //         // Selectize with autocomplete
+            //         $(this).selectize({
+            //             plugins: ['remove_button'],
+            //             delimiter: ',',
+            //             persist: false,
+            //             valueField: 'id',
+            //             labelField: 'title',
+            //             searchField: 'title',
+            //             load: function (query, callback) {
+            //                 if (!query.length) return callback();
+            //                 $.ajax({
+            //                     url: ajaxurl, // WordPress built-in AJAX handler
+            //                     type: 'POST',
+            //                     dataType: 'json',
+            //                     data: {
+            //                         action: 'cwm_search_posts',
+            //                         nonce: cwmWidget.nonce, // Make sure this is localized
+            //                         q: query
+            //                     },
+            //                     error: function () {
+            //                         callback();
+            //                     },
+            //                     success: function (res) {
+            //                         callback(res.data || []);
+            //                     }
+            //                 });
+            //             }
+            //         });
+            //     }
+            // });
 
-                $container.find('.cwm-json-data').val(JSON.stringify(data));
-            });
 
-            // Onglet actif au chargement
+            // JSON update
+            // $container.find('.cwm-mode, .cwm-selectize').off('change').on('change', function () {
+            //     const data = {};
+
+            //     $container.find('.cwm-tab-content').each(function () {
+            //         const $tab = $(this);
+            //         const type = $tab.data('tab');
+            //         const mode = $tab.find('.cwm-mode').val();
+            //         const items = $tab.find('.cwm-selectize').val() || [];
+            //         data[type] = { mode, items };
+            //     });
+
+            //     $container.find('.cwm-json-data').val(JSON.stringify(data));
+            // });
+
+            // Active tab on load
             $container.find('.cwm-tab-nav li.active').trigger('click');
         });
+
     }
 
     $(document).ready(function () {
@@ -50,4 +95,71 @@
     $(document).on('widget-updated widget-added', function (event, widget) {
         initCwmWidgetControls(widget);
     });
+
+    /* ----------------------------------------------------------------------------------------------------------------*/
+    /*                                                 STORE LAST ACTIVE NAV TAB
+    /* ----------------------------------------------------------------------------------------------------------------*/
+
+    let isSavingWidget = false;
+
+    $(document).on('click', '.widget-control-save', function () {
+        isSavingWidget = true;
+
+        // Optional: clear flag after short delay, or after widget-updated
+        setTimeout(() => {
+            isSavingWidget = false;
+        }, 2000); // adjust if needed
+    });
+
+    // Store selected tab on click
+    $(document).on('click', '.cwm-tab-nav li', function () {
+        // Prevent active tab saving if on widget save event
+        if (isSavingWidget) {
+            console.log('Tab click ignored during widget save');
+            return;
+        }
+
+        const $li = $(this);
+        const tab = $li.data('tab'); // or use text() or attr()
+        const $widget = $li.closest('.widget');
+        $widget.data('cwm-active-tab', tab);
+    });
+
+    function restoreTabState($widget) {
+        const activeTab = $widget.data('cwm-active-tab');
+        if (activeTab) {
+            $widget.find('.cwm-tab-nav li').removeClass('active');
+            $widget.find('.cwm-tab-nav li[data-tab="' + activeTab + '"]').addClass('active');
+            $widget.find('.cwm-tab-content').hide();
+            $widget.find('.cwm-tab-content[data-tab="' + activeTab + '"]').show();
+        }
+    }
+
+    $('.widget').each(function () {
+        const widget = this;
+
+        const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                if (
+                    mutation.type === 'attributes' &&
+                    mutation.attributeName === 'class'
+                ) {
+                    const wasDirty = mutation.oldValue.includes('widget-dirty');
+                    const isDirtyNow = widget.classList.contains('widget-dirty');
+
+                    if (wasDirty && !isDirtyNow) {
+                        restoreTabState($(widget));
+                    }
+                }
+            });
+        });
+
+        observer.observe(widget, {
+            attributes: true,
+            attributeFilter: ['class'],
+            attributeOldValue: true
+        });
+    });
+
+
 })(jQuery);

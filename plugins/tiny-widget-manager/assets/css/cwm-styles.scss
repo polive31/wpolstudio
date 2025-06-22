@@ -1,51 +1,180 @@
-// .cwm-tabs {
-//     margin-top: 15px;
-//     border-top: 1px solid #ccc;
-//     padding-top: 10px;
-// }
+// =======================
+// Variables
+// =======================
+
+$themes: (blue: (nav-bg: #73cfeb,
+        item-color: #000000,
+        border: #2fcfff,
+        item-bg: #dcf7ff,
+        hover-bg: #01a0e9,
+        active-bg: #0073aa,
+        scrollbar-thumb: #b3e6f7,
+    ),
+    gray: (nav-bg: #ccc,
+        item-color: #000000,
+        border: #999,
+        item-bg: #eee,
+        hover-bg: #999,
+        active-bg: #666,
+        scrollbar-thumb: #bbb,
+    ),
+    orange: (nav-bg: #ffcd8f,
+        item-color: #000000,
+        border: #ffaa00,
+        item-bg: #ffe8cc,
+        hover-bg: #ffaa00,
+        active-bg: #cc7a00,
+        scrollbar-thumb: #ffd699,
+    ),
+    lime: (nav-bg: #cbf79c,
+        item-color: #000000,
+        border: #9de30c,
+        item-bg: #ecffc8,
+        hover-bg: #9de30c,
+        active-bg: #7cc400,
+        scrollbar-thumb: #c4f28d,
+    ),
+);
+
+// =======================
+// Base styles
+// =======================
+
 .cwm-tab-nav {
     display: flex;
     justify-content: flex-start;
-    gap: 2px;
+    flex-wrap: wrap;
+    gap: 5px 2px;
     margin-bottom: 10px;
     width: 100%;
-    // background: #a1a1a1;
-    padding: 2px 0;
-    border-top: 1px dashed #6d6d6d;
-    border-bottom: 1px dashed #6d6d6d;
-}
-.cwm-tab-nav li {
-    list-style: none;
-    padding: 5px 10px;
-    background: #f1f1f1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    margin-bottom: 0;
-    transition: all 0.3s ease-in-out;
-}
-.cwm-tab-nav li:hover {
-    background: #a1a1a1;
-    color: white;
+    padding: 5px 2px 0 0;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+
+    &::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+    }
+
+    li {
+        list-style: none;
+        padding: 5px 10px;
+        background: #eee;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+        transition: all 0.3s ease-in-out;
+        border-radius: 5px 5px 0 0;
+        ;
+        border-top: 1px solid gray;
+        border-right: 1px solid gray;
+        margin-right: 2px;
+
+        &:hover {
+            color: white;
+        }
+
+        &.active {
+            color: white;
+        }
+
+        &.has-settings:after {
+            font-family: dashicons;
+            font-size: 120%;
+            padding-left: 4px;
+        }
+
+        &.has-settings.setting-show:after {
+            content: "\f177";
+        }
+
+        &.has-settings.setting-hide:after {
+            content: "\f530";
+        }
+    }
 }
 
-.cwm-tab-nav li.active {
-    background: #0073aa;
-    color: white;
-}
-.cwm-tab-nav li.has-settings:after {
-    font-family: dashicons;
-    font-size: 120%;
-    padding-left: 4px;
+// =======================
+// Theme styles
+// =======================
+
+@each $name,
+$colors in $themes {
+    .color-theme-#{$name} {
+        .cwm-tab-nav {
+            background: map-get($colors, nav-bg);
+            border-color: map-get($colors, border);
+
+            &::-webkit-scrollbar-thumb {
+                background: map-get($colors, scrollbar-thumb);
+            }
+
+            li {
+                background: map-get($colors, item-bg);
+                border-color: map-get($colors, border);
+
+                &:hover {
+                    background: map-get($colors, hover-bg);
+                }
+
+                &.active {
+                    background: map-get($colors, active-bg);
+                }
+            }
+        }
+
+        .selectize-input {
+            background-color: white;
+            // border-color: map-get($colors, item-bg);
+            color: map-get($colors, item-bg);
+
+            // &.dropdown-active {
+            //     border-color: darken(map-get($colors, item-bg), 10%);
+            // }
+        }
+
+        .selectize-dropdown {
+            // border-color: map-get($colors, item-bg);
+            // background-color: map-get($colors, item-bg);
+            background-color: white;
+
+            .option.selected,
+            .option.active {
+                background-color: map-get($colors, item-bg);
+                color: map-get($colors, item-color);
+            }
+        }
+
+        .item,
+        [data-value] {
+            // background-color: map-get($colors, item-bg);
+            background-color: white;
+            // border-color: darken(map-get($colors, item-bg), 10%);
+            color: map-get($colors, item-color);
+        }
+
+        .selectize-control.plugin-remove_button .item .remove {
+            border-left: none;
+        }
+
+        .selectize-control.multi .selectize-input [data-value] {
+            background-color: map-get($colors, active-bg);
+            // background-image: linear-gradient(to bottom, map-get($colors, item-bg), map-get($colors, active-bg));
+            background-image: none;
+            // background-repeat: repeat-x;
+            border: none;
+            text-shadow: none;
+        }
+    }
 }
 
-.cwm-tab-nav li.has-settings.setting-show:after {
-    content: "\f177";
-}
-
-.cwm-tab-nav li.has-settings.setting-hide:after {
-    content: "\f530";
-}
+// =======================
+// Other styles
+// =======================
 
 .cwm-tab-content {
     margin-bottom: 15px;
@@ -58,4 +187,9 @@ select.cwm-mode {
 input.cwm-widget-classes {
     width: 100%;
     margin-bottom: 10px;
+}
+
+.cwm-notice {
+    background: #fbe7ce;
+    padding: 20px;
 }

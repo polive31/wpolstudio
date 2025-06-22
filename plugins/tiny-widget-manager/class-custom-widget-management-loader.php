@@ -11,6 +11,7 @@ Plugin Name: Tiny Widget Manager
 Description: Manage widget visibility.
 Version: 1.0
 Author: WPol Studio
+Author URI: https://wpolstudio.com
 License: GPL2+
 */
 

@@ -8,7 +8,7 @@
     const showNotice = () => {
         dispatch('core/notices').createNotice(
             'warning',
-            'The block-based widget editor is currently enabled. You can disable it in Widget Visibility Settings.',
+            'Tiny Widget Manager will not be operational because the block-based widget editor is currently enabled. You can disable it in Widget Visibility Settings.',
             {
                 isDismissible: true,
                 actions: [

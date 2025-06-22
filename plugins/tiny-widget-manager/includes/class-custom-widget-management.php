@@ -40,6 +40,8 @@ class Custom_Widget_Management
         add_action('in_widget_form',                array($Hooks, 'add_visibility_controls'), 10, 3);
         add_filter('widget_update_callback',        array($Hooks, 'save_widget_controls'), 10, 4);
 
+        add_action('wp_ajax_cwm_search_posts',      array($Hooks, 'cwm_search_posts_callback'));
+
         // Public pages
         add_action('enqueue_block_editor_assets',   array($Hooks, 'maybe_display_notice_on_block_widget_page'));
         add_action('admin_notices',                 array($Hooks, 'maybe_display_block_editor_notice'));

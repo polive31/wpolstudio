@@ -36,8 +36,10 @@ class CWM_Hooks
     private $loggedin;
     private $user;
     private $post_types;
+    private $posts;
     private $pages;
     private $taxonomies;
+    private $color_theme;
 
     /* private constructor ensures that the class can only be */
     /* created using the get_instance static function */
@@ -47,8 +49,10 @@ class CWM_Hooks
         self::$PLUGIN_URI = trailingslashit(plugin_dir_url(dirname(__FILE__)));
         $this->sections = [
             'pages',
+            'posts types',
             'posts',
             'archives',
+            // 'terms',
             'roles',
             'devices',
         ];
@@ -57,8 +61,9 @@ class CWM_Hooks
         $this->options = [];
         if (is_admin()) {
             $this->pages = $this->_get_all_pages();
+            $this->posts = $this->_get_all_posts();
             $this->post_types = $this->_get_post_types();
-            $this->taxonomies = $this->_get_archives_and_taxonomies();
+            $this->taxonomies = $this->_get_archive_pages();
             $this->hydrate_options();
         }
         $this->args = [];
@@ -79,12 +84,15 @@ class CWM_Hooks
     {
         if ($hook !== 'widgets.php') return;
 
+        $vendor_path = 'vendor/selectize/';
+
         // Enqueue vendor scripts and styles
-        wp_enqueue_script('selectize-scripts', self::$PLUGIN_URI . 'vendor/node_modules/@selectize/selectize/dist/js/selectize.min.js', ['jquery'], self::PLUGIN_VERSION, true);
-        wp_enqueue_style('selectize-styles', self::$PLUGIN_URI . 'vendor/node_modules/@selectize/selectize/dist/css/selectize.default.css', [], self::PLUGIN_VERSION);
+        wp_enqueue_script('selectize-scripts', self::$PLUGIN_URI . $vendor_path . 'selectize.min.js', ['jquery'], self::PLUGIN_VERSION, true);
+        wp_enqueue_style('selectize-styles', self::$PLUGIN_URI . $vendor_path . 'selectize.default.css', [], self::PLUGIN_VERSION);
 
         // Enqueue custom scripts and styles
-        wp_enqueue_script('cwm-admin-scripts', self::$PLUGIN_URI . 'assets/js/cwm-scripts.min.js', ['jquery', 'selectize-scripts'], self::PLUGIN_VERSION, true);
+        wp_enqueue_script('cwm-admin-scripts', self::$PLUGIN_URI . 'assets/js/cwm-scripts.js', ['jquery', 'selectize-scripts'], self::PLUGIN_VERSION, true);
+        wp_localize_script('cwm-admin-scripts', 'cwmWidget', array('nonce' => wp_create_nonce('cwm_widget_nonce')));
         wp_enqueue_style('cwm-admin-styles', self::$PLUGIN_URI . 'assets/css/cwm-styles.min.css', [], self::PLUGIN_VERSION);
     }
 
@@ -111,19 +119,27 @@ class CWM_Hooks
     {
         $full_options = [
             'pages' => [
-                'label' => 'on checked Pages',
+                'label' => 'on selected Pages',
                 'items' => $this->pages,
             ],
-            'posts' => [
-                'label' => 'on checked Posts',
+            'posts types' => [
+                'label' => 'on selected Posts Types',
                 'items' => $this->post_types,
             ],
+            'posts' => [
+                'label' => 'on selected Posts',
+                'items' => $this->posts,
+            ],
             'archives' => [
-                'label' => 'on checked Taxonomies',
+                'label' => 'on selected Archives',
                 'items' => $this->taxonomies,
             ],
+            // 'terms' => [
+            //     'label' => 'on selected Terms',
+            //     'items' => $this->taxonomies,
+            // ],
             'roles' => [
-                'label' => 'for checked User Roles',
+                'label' => 'for selected User Roles',
                 'items' => [
                     'logged_out'    => 'Logged-out',
                     'logged_in'     => 'Logged-in',
@@ -133,7 +149,7 @@ class CWM_Hooks
                 ],
             ],
             'devices' => [
-                'label' => 'on checked Devices',
+                'label' => 'on selected Devices',
                 'items' => [
                     'desktop' => 'Computer',
                     // 'tablet' => 'Tablette',
@@ -146,6 +162,9 @@ class CWM_Hooks
         foreach ($this->sections as $section) {
             $this->options[$section] = $full_options[$section];
         }
+
+        // Color theme
+        $this->color_theme = get_option('cwm_color_theme', 'blue');
     }
 
     /**
@@ -159,7 +178,7 @@ class CWM_Hooks
     public function add_visibility_controls($widget, $return, $instance)
     {
         echo '<div class="cwm-widget-controls" data-widget-id="' . esc_attr($widget->id) . '">';
-        echo '<div class="cwm-tabs">';
+        echo '<div class="cwm-tabs color-theme-' . esc_attr($this->color_theme) . '">';
         echo '<ul class="cwm-tab-nav">';
 
         // Display tabs for each section
@@ -178,6 +197,13 @@ class CWM_Hooks
         foreach ($this->options as $section => $data) {
             $mode_val = $instance['cwm_visibility_' . $section . '_mode'] ?? 'hide';
             $items_val = (array) ($instance['cwm_visibility_' . $section . '_items'] ?? []);
+            // $autocomplete = $data['autocomplete'] ?? false;
+            // if ($autocomplete) {
+            //     // Need to populate $data['items'] with actual values
+            //     foreach ($items_val as $item_val) {
+            //         $data['items'][$item_val] = get_the_title($item_val);
+            //     }
+            // }
             $this->render_tab($section, $widget, $mode_val, $items_val, $data);
         }
 
@@ -202,25 +228,37 @@ class CWM_Hooks
      */
     private function render_tab($section, $widget, $mode_val, $items_val, $data)
     {
+        $pro = $data['pro'] ?? false;
+        $autocomplete = $data['autocomplete'] ?? false;
+        $autocomplete_class = $autocomplete ? 'autocomplete' : '';
+
         echo '<div class="cwm-tab-content" data-tab="' . esc_attr($section) . '">';
-        // echo '<label>' . ucfirst($section) . ' :</label><br />';
-        echo '<select name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][cwm_visibility_' . esc_attr($section) . '_mode]" class="cwm-mode">';
-        echo '<option value="hide"' . selected($mode_val, 'hide', false) . '>Hide ' . esc_html($data['label']) . '</option>';
-        echo '<option value="show"' . selected($mode_val, 'show', false) . '>Show ' . esc_html($data['label']) . '</option>';
-        echo '</select><br />';
-        echo '<select multiple name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][cwm_visibility_' . esc_attr($section) . '_items][]" class="cwm-selectize">';
-        foreach ($data['items'] as $value => $label) {
-            $selected = in_array($value, $items_val) ? 'selected' : '';
-            echo '<option value="' . esc_attr($value) . '" ' . esc_attr($selected) . '>' . esc_html($label) . '</option>';
+
+        if ($pro) {
+            echo '<p class="cwm-notice">This feature is only available on Tiny Manager Pro.</p>';
+        } else {
+            // echo '<label>' . ucfirst($section) . ' :</label><br />';
+            echo '<select name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][cwm_visibility_' . esc_attr($section) . '_mode]" class="cwm-mode">';
+            echo '<option value="hide"' . selected($mode_val, 'hide', false) . '>Hide ' . esc_html($data['label']) . '</option>';
+            echo '<option value="show"' . selected($mode_val, 'show', false) . '>Show ' . esc_html($data['label']) . '</option>';
+            echo '</select><br />';
+
+            echo '<select multiple name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][cwm_visibility_' . esc_attr($section) . '_items][]" class="cwm-selectize ' . esc_attr($autocomplete_class) . '">';
+            foreach ($data['items'] as $value => $label) {
+                $selected = in_array($value, $items_val) ? 'selected' : '';
+                $level = str_contains($value, ':') ? '1' : '0';
+                echo '<option  data-level="' . esc_attr($level) . '" value="' . esc_attr($value) . '" ' . esc_attr($selected) . '>' . esc_html($label) . '</option>';
+            }
+            echo '</select>';
         }
-        echo '</select>';
+
         echo '</div>';
     }
 
     /**
      * get_all_pages
      *
-     * @return void
+     * @return array
      */
     private function _get_all_pages()
     {
@@ -234,6 +272,22 @@ class CWM_Hooks
         // Add other pages
         foreach ($pages as $page) {
             $output[$page->ID] = $page->post_title;
+        }
+        return $output;
+    }
+
+    /**
+     * _get_all_posts
+     *
+     * @return void
+     */
+    private function _get_all_posts()
+    {
+        $posts = get_posts();
+        $output = [];
+        // Add other pages
+        foreach ($posts as $post) {
+            $output[$post->ID] = $post->post_title;
         }
         return $output;
     }
@@ -265,7 +319,7 @@ class CWM_Hooks
      *
      * @return array
      */
-    private function _get_archives_and_taxonomies()
+    private function _get_archive_pages()
     {
 
         $archives = [];
@@ -275,15 +329,33 @@ class CWM_Hooks
         $archives['author'] = 'Archive Author';
 
 
-        $taxes = get_taxonomies([], 'names');
-        foreach ($taxes as $tax) {
+        $taxonomies = get_taxonomies(
+            array(
+                'public'   => true,
+                'show_ui'  => true, // ensures only UI-visible ones appear
+                // '_builtin' => false // optional: hide WP core ones like 'post_tag'
+            ),
+            'names'
+        );
+        foreach ($taxonomies as $tax) {
             $tax_obj = get_taxonomy($tax);
             if ($tax_obj) {
-                $archives[$tax] = 'Taxonomy ' . $tax_obj->labels->name;
+                $archives[$tax] = 'Archive ' . $tax_obj->labels->name;
+                // Get terms for this taxonomy
+                $terms = get_terms([
+                    'taxonomy' => $tax,
+                    'hide_empty' => false,
+                ]);
+                if (!is_wp_error($terms) && !empty($terms)) {
+                    foreach ($terms as $term) {
+                        $archives[$tax . ':' . $term->term_id] = 'Archive ' . $tax_obj->labels->name . ': ' . $term->name;
+                    }
+                }
             }
         }
         return $archives;
     }
+
 
     /**
      * save_widget_controls
@@ -308,6 +380,41 @@ class CWM_Hooks
         }
         return $instance;
     }
+
+    /* ----------------------------------------------------------------------------------------------------------------*/
+    /*                                                 ADMIN-SIDE AJAX CALLBACKS
+    /* ----------------------------------------------------------------------------------------------------------------*/
+
+    /**
+     * cwm_search_posts_callback
+     *
+     * @return void
+     */
+    // public function cwm_search_posts_callback()
+    // {
+    //     check_ajax_referer('cwm_widget_nonce', 'nonce');
+
+    //     $query = isset($_POST['q']) ? sanitize_text_field($_POST['q']) : '';
+
+    //     $results = [];
+
+    //     if (!empty($query)) {
+    //         $posts = get_posts([
+    //             's' => $query,
+    //             'post_type' => 'post', // or 'any'
+    //             'posts_per_page' => 10,
+    //         ]);
+
+    //         foreach ($posts as $post) {
+    //             $results[] = [
+    //                 'id' => $post->ID,
+    //                 'title' => $post->post_title,
+    //             ];
+    //         }
+    //     }
+
+    //     wp_send_json_success($results);
+    // }
 
 
     /* ----------------------------------------------------------------------------------------------------------------*/
@@ -397,6 +504,9 @@ class CWM_Hooks
                     if (($mode === 'show' && !$match) || ($mode === 'hide' && $match)) {
                         $show = false;
                         break;
+                    } elseif ($mode === 'show' && $match) {
+                        $show = true;
+                        break;
                     }
                 }
 
@@ -436,10 +546,17 @@ class CWM_Hooks
                 break;
             case 'archives':
                 foreach ($items as $item) {
-                    if (
+                    // Check if term archive
+                    if ( str_contains( $item, ':') ) {
+                        [$tax, $term_id] = explode(':', $item);
+                        if ( ($tax=='post_tag' && is_tag($term_id)) || is_tax($tax, $term_id) ) return true;
+                    }
+                    elseif (
                         (post_type_exists($item) && is_post_type_archive($item)) ||
                         (taxonomy_exists($item) && is_tax($item)) ||
-                        ($item == 'author' && is_author())
+                        ($item == 'author' && is_author()) ||
+                        ($item == 'category' && is_category()) ||
+                        ($item == 'post_tag' && is_tag())
                     ) return true;
                 }
                 return false;
