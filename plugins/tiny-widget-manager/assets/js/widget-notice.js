@@ -2,7 +2,7 @@
     if (!wp || !wp.data || !wp.data.dispatch) return;
 
     const { dispatch } = wp.data;
-    const disableUrl = wp.url ? wp.url.addQueryArgs('options-general.php', { page: 'cwm-settings' }) : '/wp-admin/options-general.php?page=cwm-settings';
+    const disableUrl = wp.url ? wp.url.addQueryArgs('options-general.php', { page: 'twim-settings' }) : '/wp-admin/options-general.php?page=twim-settings';
 
     // Show notice once DOM is ready
     const showNotice = () => {

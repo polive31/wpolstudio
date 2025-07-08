@@ -49,7 +49,7 @@ $RECYCLE.BIN/
 .VolumeIcon.icns
 
 #node modules
-# node_modules
+node_modules
 
 # Directories potentially created on remote AFP share
 .AppleDB

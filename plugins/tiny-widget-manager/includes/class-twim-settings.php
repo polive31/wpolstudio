@@ -4,10 +4,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class CWM_Settings
+class TWIM_Settings
 {
     private static $instance = null;
 
+    /**
+     * get_instance
+     *
+     * @return TWIM_Settings
+     */
     public static function get_instance()
     {
         if (is_null(self::$instance)) {
@@ -22,54 +27,54 @@ class CWM_Settings
             'Widget Visibility Settings',
             'Tiny Widget Manager',
             'manage_options',
-            'cwm-settings',
-            'CWM_Settings::cwm_render_settings_page'
+            'twim-settings',
+            'twim_Settings::twim_render_settings_page'
         );
     }
 
     public function populate_option_page()
     {
-        register_setting('cwm_settings_group', 'cwm_disable_block_editor', [
+        register_setting('twim_settings_group', 'twim_disable_block_editor', [
             'sanitize_callback' => 'sanitize_text_field'
         ]);
 
-        register_setting('cwm_settings_group', 'cwm_color_theme', [
+        register_setting('twim_settings_group', 'twim_color_theme', [
             'sanitize_callback' => 'sanitize_text_field'
         ]);
 
         add_settings_section(
-            'cwm_main_section',
+            'twim_main_section',
             'General Settings',
             null,
-            'cwm-settings'
+            'twim-settings'
         );
 
         add_settings_field(
-            'cwm_disable_block_editor',
+            'twim_disable_block_editor',
             'Disable Block Widgets Editor',
-            'CWM_Settings::cwm_render_block_editor_field',
-            'cwm-settings',
-            'cwm_main_section'
+            'twim_Settings::twim_render_block_editor_field',
+            'twim-settings',
+            'twim_main_section'
         );
 
         add_settings_field(
-            'cwm_color_theme',
+            'twim_color_theme',
             'Color Theme',
-            'CWM_Settings::cwm_render_color_theme_field',
-            'cwm-settings',
-            'cwm_main_section'
+            'twim_Settings::twim_render_color_theme_field',
+            'twim-settings',
+            'twim_main_section'
         );
     }
 
-    public static function cwm_render_block_editor_field()
+    public static function twim_render_block_editor_field()
     {
-        $checked = get_option('cwm_disable_block_editor') ? 'checked' : '';
-        echo '<input type="checkbox" name="cwm_disable_block_editor" value="1" ' . esc_attr($checked) . '> Disable block-based widget editor (use classic)';
+        $checked = get_option('twim_disable_block_editor') ? 'checked' : '';
+        echo '<input type="checkbox" name="twim_disable_block_editor" value="1" ' . esc_attr($checked) . '> Disable block-based widget editor (use classic)';
     }
 
-    public static function cwm_render_color_theme_field()
+    public static function twim_render_color_theme_field()
     {
-        $value = get_option('cwm_color_theme', 'blue');
+        $value = get_option('twim_color_theme', 'blue');
         $options = [
             'blue'   => 'Blue',
             'gray'   => 'Gray',
@@ -77,7 +82,7 @@ class CWM_Settings
             'lime'   => 'Lime',
         ];
 
-        echo '<select name="cwm_color_theme">';
+        echo '<select name="twim_color_theme">';
         foreach ($options as $key => $label) {
             printf(
                 '<option value="%s"%s>%s</option>',
@@ -89,15 +94,15 @@ class CWM_Settings
         echo '</select>';
     }
 
-    public static function cwm_render_settings_page()
+    public static function twim_render_settings_page()
     {
         ?>
         <div class="wrap">
             <h1>Widget Visibility Settings</h1>
             <form method="post" action="options.php">
                 <?php
-                settings_fields('cwm_settings_group');
-                do_settings_sections('cwm-settings');
+                settings_fields('twim_settings_group');
+                do_settings_sections('twim-settings');
                 submit_button();
                 ?>
             </form>

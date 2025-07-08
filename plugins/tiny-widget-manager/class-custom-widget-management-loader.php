@@ -17,15 +17,15 @@ License: GPL2+
 
 /* Send admin notices whenever required plugins or theme aren't found */
 add_action('init', function() {
-    cwm_start_plugin();
+    cwim_start_plugin();
 });
 
-function cwm_start_plugin() {
+function cwim_start_plugin() {
     // Load the plugin class.
-    require_once 'includes/class-custom-widget-management.php';
-    require_once 'includes/class-cwm-hooks.php';
-    require_once 'includes/class-cwm-settings.php';
+    require_once 'includes/class-tiny-widget-manager.php';
+    require_once 'includes/class-twim-hooks.php';
+    require_once 'includes/class-twim-settings.php';
 
     // Initialize the plugin.
-    Custom_Widget_Management::get_instance();
+    Tiny_Widget_Manager::get_instance();
 }

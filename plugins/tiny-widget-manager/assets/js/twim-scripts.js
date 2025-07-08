@@ -1,20 +1,20 @@
 (function ($) {
     function initCwmWidgetControls(context) {
-        $(context).find('.cwm-widget-controls').each(function () {
+        $(context).find('.twim-widget-controls').each(function () {
             const $container = $(this);
 
             // Tabs
-            $container.find('.cwm-tab-nav li').off('click').on('click', function () {
+            $container.find('.twim-tab-nav li').off('click').on('click', function () {
                 const tab = $(this).data('tab');
-                $container.find('.cwm-tab-nav li').removeClass('active');
+                $container.find('.twim-tab-nav li').removeClass('active');
                 $(this).addClass('active');
-                $container.find('.cwm-tab-content').removeClass('active').hide();
-                $container.find(`.cwm-tab-content[data-tab="${tab}"]`).addClass('active').show();
+                $container.find('.twim-tab-content').removeClass('active').hide();
+                $container.find(`.twim-tab-content[data-tab="${tab}"]`).addClass('active').show();
             });
 
 
             // Selectize with dropdown list
-            $container.find('.cwm-selectize').each(function () {
+            $container.find('.twim-selectize').each(function () {
                 if (!this.selectize) {
                     $(this).selectize({
                         plugins: ['remove_button'],
@@ -33,7 +33,7 @@
 
 
             // Selectize with autocomplete
-            // $container.find('.cwm-selectize.autocomplete').each(function () {
+            // $container.find('.twim-selectize.autocomplete').each(function () {
             //     if (!this.selectize) {
             //         // Selectize with autocomplete
             //         $(this).selectize({
@@ -50,7 +50,7 @@
             //                     type: 'POST',
             //                     dataType: 'json',
             //                     data: {
-            //                         action: 'cwm_search_posts',
+            //                         action: 'twim_search_posts',
             //                         nonce: cwmWidget.nonce, // Make sure this is localized
             //                         q: query
             //                     },
@@ -68,22 +68,22 @@
 
 
             // JSON update
-            // $container.find('.cwm-mode, .cwm-selectize').off('change').on('change', function () {
+            // $container.find('.twim-mode, .twim-selectize').off('change').on('change', function () {
             //     const data = {};
 
-            //     $container.find('.cwm-tab-content').each(function () {
+            //     $container.find('.twim-tab-content').each(function () {
             //         const $tab = $(this);
             //         const type = $tab.data('tab');
-            //         const mode = $tab.find('.cwm-mode').val();
-            //         const items = $tab.find('.cwm-selectize').val() || [];
+            //         const mode = $tab.find('.twim-mode').val();
+            //         const items = $tab.find('.twim-selectize').val() || [];
             //         data[type] = { mode, items };
             //     });
 
-            //     $container.find('.cwm-json-data').val(JSON.stringify(data));
+            //     $container.find('.twim-json-data').val(JSON.stringify(data));
             // });
 
             // Active tab on load
-            $container.find('.cwm-tab-nav li.active').trigger('click');
+            $container.find('.twim-tab-nav li.active').trigger('click');
         });
 
     }
@@ -112,7 +112,7 @@
     });
 
     // Store selected tab on click
-    $(document).on('click', '.cwm-tab-nav li', function () {
+    $(document).on('click', '.twim-tab-nav li', function () {
         // Prevent active tab saving if on widget save event
         if (isSavingWidget) {
             console.log('Tab click ignored during widget save');
@@ -122,16 +122,16 @@
         const $li = $(this);
         const tab = $li.data('tab'); // or use text() or attr()
         const $widget = $li.closest('.widget');
-        $widget.data('cwm-active-tab', tab);
+        $widget.data('twim-active-tab', tab);
     });
 
     function restoreTabState($widget) {
-        const activeTab = $widget.data('cwm-active-tab');
+        const activeTab = $widget.data('twim-active-tab');
         if (activeTab) {
-            $widget.find('.cwm-tab-nav li').removeClass('active');
-            $widget.find('.cwm-tab-nav li[data-tab="' + activeTab + '"]').addClass('active');
-            $widget.find('.cwm-tab-content').hide();
-            $widget.find('.cwm-tab-content[data-tab="' + activeTab + '"]').show();
+            $widget.find('.twim-tab-nav li').removeClass('active');
+            $widget.find('.twim-tab-nav li[data-tab="' + activeTab + '"]').addClass('active');
+            $widget.find('.twim-tab-content').hide();
+            $widget.find('.twim-tab-content[data-tab="' + activeTab + '"]').show();
         }
     }
 

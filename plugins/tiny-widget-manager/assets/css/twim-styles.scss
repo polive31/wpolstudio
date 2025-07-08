@@ -2,7 +2,8 @@
 // Variables
 // =======================
 
-$themes: (blue: (nav-bg: #73cfeb,
+$themes: (blue: (widget-bg: #d3eaf1,
+        nav-bg: #73cfeb,
         item-color: #000000,
         border: #2fcfff,
         item-bg: #dcf7ff,
@@ -10,7 +11,8 @@ $themes: (blue: (nav-bg: #73cfeb,
         active-bg: #0073aa,
         scrollbar-thumb: #b3e6f7,
     ),
-    gray: (nav-bg: #ccc,
+    gray: (widget-bg: #f3f3f3,
+        nav-bg: #ccc,
         item-color: #000000,
         border: #999,
         item-bg: #eee,
@@ -18,7 +20,8 @@ $themes: (blue: (nav-bg: #73cfeb,
         active-bg: #666,
         scrollbar-thumb: #bbb,
     ),
-    orange: (nav-bg: #ffcd8f,
+    orange: (widget-bg: #e7ddcf,
+        nav-bg: #ffcd8f,
         item-color: #000000,
         border: #ffaa00,
         item-bg: #ffe8cc,
@@ -26,7 +29,8 @@ $themes: (blue: (nav-bg: #73cfeb,
         active-bg: #cc7a00,
         scrollbar-thumb: #ffd699,
     ),
-    lime: (nav-bg: #cbf79c,
+    lime: (widget-bg: #e0eed0,
+        nav-bg: #cbf79c,
         item-color: #000000,
         border: #9de30c,
         item-bg: #ecffc8,
@@ -40,16 +44,35 @@ $themes: (blue: (nav-bg: #73cfeb,
 // Base styles
 // =======================
 
-.cwm-tab-nav {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 5px 2px;
-    margin-bottom: 10px;
+.twim-widget-controls {
+    margin-bottom: 15px;
+}
+
+.twim-tabs {
     width: 100%;
-    padding: 5px 2px 0 0;
+    padding: 5px;
+}
+
+p.twim-andor {
+    display: flex;
+    align-items: center;
+    gap: 0 5px;
+    padding: 0 5px;
+}
+
+.twim-tab-content {
+    padding: 5px;
+}
+
+.twim-tab-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 0;
+    // width: 100%;
     border-top: 1px solid;
     border-bottom: 1px solid;
+    padding: 0 5px;
 
     &::-webkit-scrollbar {
         height: 8px;
@@ -60,8 +83,9 @@ $themes: (blue: (nav-bg: #73cfeb,
     }
 
     li {
+        justify-content: center;
         list-style: none;
-        padding: 5px 10px;
+        padding: 5px 4px;
         background: #eee;
         cursor: pointer;
         display: flex;
@@ -69,10 +93,9 @@ $themes: (blue: (nav-bg: #73cfeb,
         margin-bottom: 0;
         transition: all 0.3s ease-in-out;
         border-radius: 5px 5px 0 0;
-        ;
         border-top: 1px solid gray;
         border-right: 1px solid gray;
-        margin-right: 2px;
+        // margin-right: 2px;
 
         &:hover {
             color: white;
@@ -104,8 +127,17 @@ $themes: (blue: (nav-bg: #73cfeb,
 
 @each $name,
 $colors in $themes {
-    .color-theme-#{$name} {
-        .cwm-tab-nav {
+
+    .twim-widget-controls.color-theme-#{$name} {
+
+
+        .twim-tabs {
+            background: map-get($colors, widget-bg);
+            border-color: map-get($colors, border);
+        }
+
+        .twim-tab-content,
+        .twim-tab-nav {
             background: map-get($colors, nav-bg);
             border-color: map-get($colors, border);
 
@@ -176,20 +208,21 @@ $colors in $themes {
 // Other styles
 // =======================
 
-.cwm-tab-content {
+.twim-tab-content {
     margin-bottom: 15px;
 }
 
-select.cwm-mode {
+select.twim-mode {
     margin-bottom: 10px;
+    font-size: 90%;
 }
 
-input.cwm-widget-classes {
+input.twim-widget-classes {
     width: 100%;
     margin-bottom: 10px;
 }
 
-.cwm-notice {
+.twim-notice {
     background: #fbe7ce;
     padding: 20px;
 }

@@ -6,14 +6,14 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class CWM_Hooks
+class TWIM_Hooks
 {
     /* Returns class instance (singleton method) */
     private static $instance = null;
     /**
      * get_instance
      *
-     * @return CWM_Hooks
+     * @return TWIM_Hooks
      */
     public static function get_instance()
     {
@@ -74,6 +74,34 @@ class CWM_Hooks
         $this->user = wp_get_current_user();
     }
 
+
+    /**
+     * enqueue_block_widget_editor_scripts
+     *
+     * @return void
+     */
+    public function enqueue_block_widget_editor_scripts()
+    {
+        wp_enqueue_script(
+            'twm-block-widget-controls',
+            self::$PLUGIN_URI . 'assets/js/block-visibility-controls.js',
+            [
+                'wp-blocks',
+                'wp-element',
+                'wp-editor',
+                'wp-edit-post',
+                'wp-components',
+                'wp-data',
+                'wp-compose',
+                'wp-hooks',
+                'wp-api-fetch'
+            ],
+            self::PLUGIN_VERSION,
+            ['footer' => true]
+        );
+    }
+
+
     /**
      * Enqueue scripts and styles for the admin area.
      *
@@ -91,9 +119,9 @@ class CWM_Hooks
         wp_enqueue_style('selectize-styles', self::$PLUGIN_URI . $vendor_path . 'selectize.default.css', [], self::PLUGIN_VERSION);
 
         // Enqueue custom scripts and styles
-        wp_enqueue_script('cwm-admin-scripts', self::$PLUGIN_URI . 'assets/js/cwm-scripts.js', ['jquery', 'selectize-scripts'], self::PLUGIN_VERSION, true);
-        wp_localize_script('cwm-admin-scripts', 'cwmWidget', array('nonce' => wp_create_nonce('cwm_widget_nonce')));
-        wp_enqueue_style('cwm-admin-styles', self::$PLUGIN_URI . 'assets/css/cwm-styles.min.css', [], self::PLUGIN_VERSION);
+        wp_enqueue_script('twim-admin-scripts', self::$PLUGIN_URI . 'assets/js/twim-scripts.js', ['jquery', 'selectize-scripts'], self::PLUGIN_VERSION, true);
+        wp_localize_script('twim-admin-scripts', 'cwmWidget', array('nonce' => wp_create_nonce('twim_widget_nonce')));
+        wp_enqueue_style('twim-admin-styles', self::$PLUGIN_URI . 'assets/css/twim-styles.min.css', [], self::PLUGIN_VERSION);
     }
 
     /**
@@ -164,7 +192,7 @@ class CWM_Hooks
         }
 
         // Color theme
-        $this->color_theme = get_option('cwm_color_theme', 'blue');
+        $this->color_theme = get_option('twim_color_theme', 'blue');
     }
 
     /**
@@ -177,14 +205,24 @@ class CWM_Hooks
      */
     public function add_visibility_controls($widget, $return, $instance)
     {
-        echo '<div class="cwm-widget-controls" data-widget-id="' . esc_attr($widget->id) . '">';
-        echo '<div class="cwm-tabs color-theme-' . esc_attr($this->color_theme) . '">';
-        echo '<ul class="cwm-tab-nav">';
+        echo '<div class="twim-widget-controls color-theme-' . esc_attr($this->color_theme) . '" data-widget-id="' . esc_attr($widget->id) . '">';
+
+        // Before tabs section (AND/OR input)
+        $andor_value = $instance['twim_visibility_andor'] ?? 'and';
+        $andor_input = '<select name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_andor]" class="twim-andor">';
+        $andor_input .=  '<option value="and"' . selected($andor_value, 'and', false) . '>all conditions are met</option>';
+        $andor_input .=  '<option value="or"' . selected($andor_value, 'or', false) . '>any condition is met</option>';
+        $andor_input .=  '</select>';
+
+
+        echo '<div class="twim-tabs">';
+        echo '<p class="twim-andor">Show if ' . $andor_input . '</p>';
+        echo '<ul class="twim-tab-nav">';
 
         // Display tabs for each section
         foreach ($this->options as $section => $data) {
-            $mode = $instance['cwm_visibility_' . $section . '_mode'] ?? 'hide';
-            $has_items =  !empty($instance['cwm_visibility_' . $section . '_items']);
+            $mode = $instance['twim_visibility_' . $section . '_mode'] ?? 'hide';
+            $has_items =  !empty($instance['twim_visibility_' . $section . '_items']);
             $has_settings = $has_items || ($mode === 'show');
 
             $classes = $has_settings ? 'has-settings setting-' . $mode : '';
@@ -195,8 +233,8 @@ class CWM_Hooks
 
         // Display content for each section
         foreach ($this->options as $section => $data) {
-            $mode_val = $instance['cwm_visibility_' . $section . '_mode'] ?? 'hide';
-            $items_val = (array) ($instance['cwm_visibility_' . $section . '_items'] ?? []);
+            $mode_val = $instance['twim_visibility_' . $section . '_mode'] ?? 'hide';
+            $items_val = (array) ($instance['twim_visibility_' . $section . '_items'] ?? []);
             // $autocomplete = $data['autocomplete'] ?? false;
             // if ($autocomplete) {
             //     // Need to populate $data['items'] with actual values
@@ -208,9 +246,9 @@ class CWM_Hooks
         }
 
         // Display widget class input
-        $class = $instance['cwm_custom_classes'] ?? '';
+        $class = $instance['twim_custom_classes'] ?? '';
         echo '<label>CSS classes :</label><br />';
-        echo '<input class="cwm-widget-classes" type="text" name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][cwm_custom_classes]" value="' . esc_attr($class) . '" />';
+        echo '<input class="twim-widget-classes" type="text" name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_custom_classes]" value="' . esc_attr($class) . '" />';
 
         echo '</div></div>';
     }
@@ -232,22 +270,22 @@ class CWM_Hooks
         $autocomplete = $data['autocomplete'] ?? false;
         $autocomplete_class = $autocomplete ? 'autocomplete' : '';
 
-        echo '<div class="cwm-tab-content" data-tab="' . esc_attr($section) . '">';
+        echo '<div class="twim-tab-content" data-tab="' . esc_attr($section) . '">';
 
         if ($pro) {
-            echo '<p class="cwm-notice">This feature is only available on Tiny Manager Pro.</p>';
+            echo '<p class="twim-notice">This feature is only available on Tiny Manager Pro.</p>';
         } else {
             // echo '<label>' . ucfirst($section) . ' :</label><br />';
-            echo '<select name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][cwm_visibility_' . esc_attr($section) . '_mode]" class="cwm-mode">';
+            echo '<select name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_mode]" class="twim-mode">';
             echo '<option value="hide"' . selected($mode_val, 'hide', false) . '>Hide ' . esc_html($data['label']) . '</option>';
             echo '<option value="show"' . selected($mode_val, 'show', false) . '>Show ' . esc_html($data['label']) . '</option>';
             echo '</select><br />';
 
-            echo '<select multiple name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][cwm_visibility_' . esc_attr($section) . '_items][]" class="cwm-selectize ' . esc_attr($autocomplete_class) . '">';
+            echo '<select multiple name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_items][]" class="twim-selectize ' . esc_attr($autocomplete_class) . '">';
             foreach ($data['items'] as $value => $label) {
                 $selected = in_array($value, $items_val) ? 'selected' : '';
                 $level = str_contains($value, ':') ? '1' : '0';
-                echo '<option  data-level="' . esc_attr($level) . '" value="' . esc_attr($value) . '" ' . esc_attr($selected) . '>' . esc_html($label) . '</option>';
+                echo '<option data-level="' . esc_attr($level) . '" value="' . esc_attr($value) . '" ' . esc_attr($selected) . '>' . esc_html($label) . '</option>';
             }
             echo '</select>';
         }
@@ -368,15 +406,16 @@ class CWM_Hooks
      */
     public function save_widget_controls($instance, $new_instance, $old_instance, $widget)
     {
+        $instance['twim_visibility_andor'] = $new_instance['twim_visibility_andor'] ?? 'and';
         foreach ($this->options as $section => $data) {
-            $instance['cwm_visibility_' . $section . '_mode'] = $new_instance['cwm_visibility_' . $section . '_mode'] ?? 'hide';
-            $instance['cwm_visibility_' . $section . '_items'] = $new_instance['cwm_visibility_' . $section . '_items'] ?? [];
+            $instance['twim_visibility_' . $section . '_mode'] = $new_instance['twim_visibility_' . $section . '_mode'] ?? 'hide';
+            $instance['twim_visibility_' . $section . '_items'] = $new_instance['twim_visibility_' . $section . '_items'] ?? [];
 
             // Cleanup classes input
-            $classes = trim(preg_replace('/\s+/', ' ',  $new_instance['cwm_custom_classes'] ?? ''));
+            $classes = trim(preg_replace('/\s+/', ' ',  $new_instance['twim_custom_classes'] ?? ''));
             $classes = esc_attr($classes);
             $classes = sanitize_html_class($classes);
-            $instance['cwm_custom_classes'] = $classes;
+            $instance['twim_custom_classes'] = $classes;
         }
         return $instance;
     }
@@ -386,13 +425,13 @@ class CWM_Hooks
     /* ----------------------------------------------------------------------------------------------------------------*/
 
     /**
-     * cwm_search_posts_callback
+     * twim_search_posts_callback
      *
      * @return void
      */
-    // public function cwm_search_posts_callback()
+    // public function twim_search_posts_callback()
     // {
-    //     check_ajax_referer('cwm_widget_nonce', 'nonce');
+    //     check_ajax_referer('twim_widget_nonce', 'nonce');
 
     //     $query = isset($_POST['q']) ? sanitize_text_field($_POST['q']) : '';
 
@@ -432,10 +471,10 @@ class CWM_Hooks
         $screen = get_current_screen();
         if (
             $screen && $screen->id === 'widgets' &&
-            !get_option('cwm_disable_block_editor')
+            !get_option('twim_disable_block_editor')
         ) {
             wp_enqueue_script(
-                'cwm-widget-notice',
+                'twim-widget-notice',
                 self::$PLUGIN_URI . 'assets/js/widget-notice.js',
                 ['wp-data', 'wp-url'], // Required for wp.data.dispatch & wp.url
                 '1.0',
@@ -453,13 +492,13 @@ class CWM_Hooks
     {
         // // Only show on widgets-related pages or plugin settings page
         // $screen = get_current_screen();
-        // if (!in_array($screen->id, ['widgets', 'customize', 'settings_page_cwm-settings'])) {
+        // if (!in_array($screen->id, ['widgets', 'customize', 'settings_page_twim-settings'])) {
         //     return;
         // }
 
-        if (!get_option('cwm_disable_block_editor')) {
+        if (!get_option('twim_disable_block_editor')) {
             echo '<div class="notice notice-warning is-dismissible">';
-            echo '<p><strong>Notice:</strong> Tiny Widget Manager will not be operational because the block-based widget editor is currently <strong>enabled</strong>. You can disable it in <a href="' . esc_url(admin_url('options-general.php?page=cwm-settings')) . '">Tiny Widget Manager settings</a>.</p>';
+            echo '<p><strong>Notice:</strong> Tiny Widget Manager will not be operational because the block-based widget editor is currently <strong>enabled</strong>. You can disable it in <a href="' . esc_url(admin_url('options-general.php?page=twim-settings')) . '">Tiny Widget Manager settings</a>.</p>';
             echo '</div>';
         }
     }
@@ -471,7 +510,7 @@ class CWM_Hooks
      */
     public function maybe_disable_block_editor()
     {
-        return !get_option('cwm_disable_block_editor'); // Return false if the option is checked
+        return !get_option('twim_disable_block_editor'); // Return false if the option is checked
     }
 
 
@@ -495,19 +534,20 @@ class CWM_Hooks
                 $show = true;
 
                 foreach ($this->sections as $section) {
-                    $mode = $instance['cwm_visibility_' . $section . '_mode'] ?? false;
+                    $mode = $instance['twim_visibility_' . $section . '_mode'] ?? false;
                     if (!$mode) continue;
 
-                    $items = $instance['cwm_visibility_' . $section . '_items'] ?? [];
+                    $items = $instance['twim_visibility_' . $section . '_items'] ?? [];
                     $match = $this->match_section($section, $items);
                     // Exit loop and set show to false as soon as "not show" is identified
                     if (($mode === 'show' && !$match) || ($mode === 'hide' && $match)) {
                         $show = false;
                         break;
-                    } elseif ($mode === 'show' && $match) {
-                        $show = true;
-                        break;
                     }
+                    // elseif ($mode === 'show' && $match) {
+                    //     $show = true;
+                    //     break;
+                    // }
                 }
 
                 // Check visibility using your logic here
@@ -547,11 +587,10 @@ class CWM_Hooks
             case 'archives':
                 foreach ($items as $item) {
                     // Check if term archive
-                    if ( str_contains( $item, ':') ) {
+                    if (str_contains($item, ':')) {
                         [$tax, $term_id] = explode(':', $item);
-                        if ( ($tax=='post_tag' && is_tag($term_id)) || is_tax($tax, $term_id) ) return true;
-                    }
-                    elseif (
+                        if (($tax == 'post_tag' && is_tag($term_id)) || is_tax($tax, $term_id)) return true;
+                    } elseif (
                         (post_type_exists($item) && is_post_type_archive($item)) ||
                         (taxonomy_exists($item) && is_tax($item)) ||
                         ($item == 'author' && is_author()) ||
@@ -603,7 +642,7 @@ class CWM_Hooks
 
             if ($widget_number !== null && isset($all_instances[$widget_number])) {
                 $instance = $all_instances[$widget_number];
-                $custom_class = trim(preg_replace('/\s+/', ' ', $instance['cwm_custom_classes'] ?? ''));
+                $custom_class = trim(preg_replace('/\s+/', ' ', $instance['twim_custom_classes'] ?? ''));
 
                 if (!empty($custom_class)) {
                     $params[0]['before_widget'] = preg_replace(
