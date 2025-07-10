@@ -1,7 +1,7 @@
 === Tiny Widget Manager ===
 Contributors: WPol Studio
 Donate link: https://ko-fi.com/wpolstudio
-Tags: widgets, visibility, admin, conditional, logic
+Tags: widgets, visibility, admin, conditional, logic, translation-ready
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 8.0
@@ -12,16 +12,17 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-**Tiny Widget Manager** enhances the WordPress widget system by letting you control the visibility of each widget based on various conditions—all from the widget admin panel.
+**Tiny Widget Manager** enhances the WordPress widget system by letting you control the visibility of each widget based on various conditions, directly from the widget admin panel.
 
-IMPORTANT : In order for Tiny Widget Manager to operate, you will need to display use the *legacy widget interface* instead of the block-based widget page (this can be achieved in the plugins' settings page).
+IMPORTANT : In order for Tiny Widget Manager to operate, you will need to display the *legacy widget interface* instead of the block-based widget page (this can be achieved in the plugins' settings page).
 
-The power of TWM resides in the fact that it can *show* or *hide* your widget according to each of those conditions :
+The power of TWIM resides in the variety of logic conditions it supports :
 - Specific pages or posts
 - Post types (custom or built-in)
 - Archive types (category, tag, author, date)
 - Logged-in users or user roles
 - Device type (mobile, tablet, desktop)
+- Overall logic between conditions (either all conditions need to be true, or just one)
 
 Since each condition group can have its own show/hide setting, the combinations are endless. You have therefore a *total control* on your widget's visibility !
 

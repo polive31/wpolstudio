@@ -31,6 +31,37 @@
                 }
             });
 
+            // Selectize single
+            $container.find('.twim-selectize-showhide').each(function () {
+                if (!this.selectize) {
+                    $(this).selectize({
+                        // plugins: ['remove_button'],
+                        delimiter: ',',
+                        persist: false,
+                        render: {
+                            option: function (data, escape) {
+                                let icon = '';
+                                if (data.value === 'show') {
+                                    icon = '<span class="dashicons dashicons-visibility" style="margin-right:4px;"></span>';
+                                } else if (data.value === 'hide') {
+                                    icon = '<span class="dashicons dashicons-hidden" style="margin-right:4px;"></span>';
+                                }
+                                return '<div style="vertical-align:middle">' + icon + escape(data.text) + '</div>';
+                            },
+                            item: function (data, escape) {
+                                let icon = '';
+                                if (data.value === 'show') {
+                                    icon = '<span class="dashicons dashicons-visibility" style="margin-right:4px;"></span>';
+                                } else if (data.value === 'hide') {
+                                    icon = '<span class="dashicons dashicons-hidden" style="margin-right:4px;"></span>';
+                                }
+                                return '<div style="vertical-align:middle">' + icon + escape(data.text) + '</div>';
+                            }
+                        }
+                    });
+                }
+            });
+
 
             // Selectize with autocomplete
             // $container.find('.twim-selectize.autocomplete').each(function () {

@@ -1,0 +1,173 @@
+# Copyright (C) 2025 WPol Studio
+# This file is distributed under the GPL2+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Tiny Widget Manager 1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tiny-widget-manager\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-07-10T21:49:41+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: twim\n"
+
+#. Plugin Name of the plugin
+#: class-custom-widget-management-loader.php
+msgid "Tiny Widget Manager"
+msgstr ""
+
+#. Description of the plugin
+#: class-custom-widget-management-loader.php
+msgid "Manage widget visibility."
+msgstr ""
+
+#. Author of the plugin
+#: class-custom-widget-management-loader.php
+msgid "WPol Studio"
+msgstr ""
+
+#. Author URI of the plugin
+#: class-custom-widget-management-loader.php
+msgid "https://wpolstudio.com"
+msgstr ""
+
+#: includes/class-twim-hooks.php:150
+msgid "Pages"
+msgstr ""
+
+#: includes/class-twim-hooks.php:151
+msgid "on selected Pages"
+msgstr ""
+
+#: includes/class-twim-hooks.php:155
+msgid "Posts"
+msgstr ""
+
+#: includes/class-twim-hooks.php:156
+msgid "on selected Posts Types"
+msgstr ""
+
+#: includes/class-twim-hooks.php:160
+msgid "Archives"
+msgstr ""
+
+#: includes/class-twim-hooks.php:161
+msgid "on selected Archives"
+msgstr ""
+
+#: includes/class-twim-hooks.php:165
+msgid "Roles"
+msgstr ""
+
+#: includes/class-twim-hooks.php:166
+msgid "for selected User Roles"
+msgstr ""
+
+#: includes/class-twim-hooks.php:168
+msgid "Logged-out"
+msgstr ""
+
+#: includes/class-twim-hooks.php:169
+msgid "Logged-in"
+msgstr ""
+
+#: includes/class-twim-hooks.php:170
+msgid "Admin"
+msgstr ""
+
+#: includes/class-twim-hooks.php:171
+msgid "Editor"
+msgstr ""
+
+#: includes/class-twim-hooks.php:172
+msgid "Subscriber"
+msgstr ""
+
+#: includes/class-twim-hooks.php:176
+msgid "Devices"
+msgstr ""
+
+#: includes/class-twim-hooks.php:177
+msgid "on selected Devices"
+msgstr ""
+
+#: includes/class-twim-hooks.php:179
+msgid "Computer"
+msgstr ""
+
+#: includes/class-twim-hooks.php:181
+msgid "Mobile"
+msgstr ""
+
+#: includes/class-twim-hooks.php:210
+msgid "all conditions are met"
+msgstr ""
+
+#: includes/class-twim-hooks.php:211
+msgid "any \"show\" condition is met"
+msgstr ""
+
+#: includes/class-twim-hooks.php:216
+msgid "Show if "
+msgstr ""
+
+#: includes/class-twim-hooks.php:252
+msgid "CSS classes"
+msgstr ""
+
+#: includes/class-twim-hooks.php:278
+msgid "This feature is only available on Tiny Manager Pro."
+msgstr ""
+
+#: includes/class-twim-hooks.php:282
+msgid "Hide "
+msgstr ""
+
+#: includes/class-twim-hooks.php:283
+msgid "Show "
+msgstr ""
+
+#: includes/class-twim-hooks.php:286
+msgid "Select items..."
+msgstr ""
+
+#: includes/class-twim-hooks.php:369
+msgid "Archive Author"
+msgstr ""
+
+#. translators: %s: URL to Tiny Widget Manager settings page.
+#: includes/class-twim-hooks.php:504
+#, php-format
+msgid "<strong>Notice:</strong> Tiny Widget Manager will not be operational because the block-based widget editor is currently <strong>enabled</strong>. You can disable it in <a href=\"%s\">Tiny Widget Manager settings</a>"
+msgstr ""
+
+#: includes/class-twim-settings.php:54
+msgid "Disable Block Widgets Editor"
+msgstr ""
+
+#: includes/class-twim-settings.php:62
+msgid "Color Theme"
+msgstr ""
+
+#: includes/class-twim-settings.php:72
+msgid "Use classic widget editor"
+msgstr ""
+
+#: includes/class-twim-settings.php:79
+msgid "Blue"
+msgstr ""
+
+#: includes/class-twim-settings.php:80
+msgid "Gray"
+msgstr ""
+
+#: includes/class-twim-settings.php:81
+msgid "Orange"
+msgstr ""
+
+#: includes/class-twim-settings.php:82
+msgid "Lime"
+msgstr ""

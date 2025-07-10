@@ -49,7 +49,7 @@ class TWIM_Hooks
         self::$PLUGIN_URI = trailingslashit(plugin_dir_url(dirname(__FILE__)));
         $this->sections = [
             'pages',
-            'posts types',
+            // 'posts types',
             'posts',
             'archives',
             // 'terms',
@@ -61,7 +61,7 @@ class TWIM_Hooks
         $this->options = [];
         if (is_admin()) {
             $this->pages = $this->_get_all_pages();
-            $this->posts = $this->_get_all_posts();
+            // $this->posts = $this->_get_all_posts();
             $this->post_types = $this->_get_post_types();
             $this->taxonomies = $this->_get_archive_pages();
             $this->hydrate_options();
@@ -147,41 +147,38 @@ class TWIM_Hooks
     {
         $full_options = [
             'pages' => [
-                'label' => 'on selected Pages',
+                'title' => __('Pages', 'twim'),
+                'label' => __('on selected Pages', 'twim'),
                 'items' => $this->pages,
             ],
-            'posts types' => [
-                'label' => 'on selected Posts Types',
+            'posts' => [
+                'title' => __('Posts', 'twim'),
+                'label' => __('on selected Posts Types', 'twim'),
                 'items' => $this->post_types,
             ],
-            'posts' => [
-                'label' => 'on selected Posts',
-                'items' => $this->posts,
-            ],
             'archives' => [
-                'label' => 'on selected Archives',
+                'title' => __('Archives', 'twim'),
+                'label' => __('on selected Archives', 'twim'),
                 'items' => $this->taxonomies,
             ],
-            // 'terms' => [
-            //     'label' => 'on selected Terms',
-            //     'items' => $this->taxonomies,
-            // ],
             'roles' => [
-                'label' => 'for selected User Roles',
+                'title' => __('Roles', 'twim'),
+                'label' => __('for selected User Roles', 'twim'),
                 'items' => [
-                    'logged_out'    => 'Logged-out',
-                    'logged_in'     => 'Logged-in',
-                    'administrator' => 'Admin',
-                    'editor'        => 'Editor',
-                    'subscriber'    => 'Subscriber',
+                    'logged_out'    => __('Logged-out', 'twim'),
+                    'logged_in'     => __('Logged-in', 'twim'),
+                    'administrator' => __('Admin', 'twim'),
+                    'editor'        => __('Editor', 'twim'),
+                    'subscriber'    => __('Subscriber', 'twim'),
                 ],
             ],
             'devices' => [
-                'label' => 'on selected Devices',
+                'title' => __('Devices', 'twim'),
+                'label' => __('on selected Devices', 'twim'),
                 'items' => [
-                    'desktop' => 'Computer',
+                    'desktop' => __('Computer', 'twim'),
                     // 'tablet' => 'Tablette',
-                    'mobile' => 'Mobile',
+                    'mobile' => __('Mobile', 'twim'),
                 ],
             ],
         ];
@@ -210,13 +207,14 @@ class TWIM_Hooks
         // Before tabs section (AND/OR input)
         $andor_value = $instance['twim_visibility_andor'] ?? 'and';
         $andor_input = '<select name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_andor]" class="twim-andor">';
-        $andor_input .=  '<option value="and"' . selected($andor_value, 'and', false) . '>all conditions are met</option>';
-        $andor_input .=  '<option value="or"' . selected($andor_value, 'or', false) . '>any condition is met</option>';
-        $andor_input .=  '</select>';
+        $andor_input .= '<option value="and"' . selected($andor_value, 'and', false) . '>' . __('all conditions are met', 'twim') . '</option>';
+        $andor_input .= '<option value="or"' . selected($andor_value, 'or', false) . '>' . __('any "show" condition is met', 'twim') . '</option>';
+        $andor_input .= '</select>';
 
 
         echo '<div class="twim-tabs">';
-        echo '<p class="twim-andor">Show if ' . $andor_input . '</p>';
+        echo '<p class="twim-andor">' . __('Show if ', 'twim') . $andor_input . '</p>';
+        echo '<div class="twim-wrap">';
         echo '<ul class="twim-tab-nav">';
 
         // Display tabs for each section
@@ -224,13 +222,15 @@ class TWIM_Hooks
             $mode = $instance['twim_visibility_' . $section . '_mode'] ?? 'hide';
             $has_items =  !empty($instance['twim_visibility_' . $section . '_items']);
             $has_settings = $has_items || ($mode === 'show');
+            $title = $data['title'] ?? '';
 
             $classes = $has_settings ? 'has-settings setting-' . $mode : '';
             $classes .= ($section === 'pages') ? ' active' : '';
-            echo '<li class="' . esc_attr($classes) . '" data-tab="' . esc_attr($section) . '">' . esc_attr(ucfirst($section)) . '</li>';
+            echo '<li class="' . esc_attr($classes) . '" data-tab="' . esc_attr($section) . '">' . esc_attr($title) . '</li>';
         }
         echo '</ul>';
 
+        echo '<div class="twim-tabs-content">';
         // Display content for each section
         foreach ($this->options as $section => $data) {
             $mode_val = $instance['twim_visibility_' . $section . '_mode'] ?? 'hide';
@@ -244,10 +244,12 @@ class TWIM_Hooks
             // }
             $this->render_tab($section, $widget, $mode_val, $items_val, $data);
         }
+        echo '</div>'; // twim-tabs-content
+        echo '</div>'; // twim-wrap
 
         // Display widget class input
         $class = $instance['twim_custom_classes'] ?? '';
-        echo '<label>CSS classes :</label><br />';
+        echo '<div class="twim-label">' . __('CSS classes', 'twim') . ':</div>';
         echo '<input class="twim-widget-classes" type="text" name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_custom_classes]" value="' . esc_attr($class) . '" />';
 
         echo '</div></div>';
@@ -273,15 +275,15 @@ class TWIM_Hooks
         echo '<div class="twim-tab-content" data-tab="' . esc_attr($section) . '">';
 
         if ($pro) {
-            echo '<p class="twim-notice">This feature is only available on Tiny Manager Pro.</p>';
+            echo '<p class="twim-notice">' . __('This feature is only available on Tiny Manager Pro.', 'twim') . '</p>';
         } else {
             // echo '<label>' . ucfirst($section) . ' :</label><br />';
-            echo '<select name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_mode]" class="twim-mode">';
-            echo '<option value="hide"' . selected($mode_val, 'hide', false) . '>Hide ' . esc_html($data['label']) . '</option>';
-            echo '<option value="show"' . selected($mode_val, 'show', false) . '>Show ' . esc_html($data['label']) . '</option>';
+            echo '<select class="twim-selectize-showhide" name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_mode]" class="twim-mode">';
+            echo '<option value="hide"' . selected($mode_val, 'hide', false) . '>' . __('Hide ', 'twim') . esc_html($data['label']) . '</option>';
+            echo '<option value="show"' . selected($mode_val, 'show', false) . '>' . __('Show ', 'twim') . esc_html($data['label']) . '</option>';
             echo '</select><br />';
 
-            echo '<select multiple name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_items][]" class="twim-selectize ' . esc_attr($autocomplete_class) . '">';
+            echo '<select multiple name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_items][]" class="twim-selectize ' . esc_attr($autocomplete_class) . '" placeholder="' . esc_attr(__('Select items...', 'twim')) . '">';
             foreach ($data['items'] as $value => $label) {
                 $selected = in_array($value, $items_val) ? 'selected' : '';
                 $level = str_contains($value, ':') ? '1' : '0';
@@ -364,7 +366,7 @@ class TWIM_Hooks
         foreach ($this->post_types as $post_type => $label) {
             $archives[$post_type] = 'Archive ' . ucfirst($label);
         }
-        $archives['author'] = 'Archive Author';
+        $archives['author'] = __('Archive Author', 'twim');
 
 
         $taxonomies = get_taxonomies(
@@ -498,7 +500,8 @@ class TWIM_Hooks
 
         if (!get_option('twim_disable_block_editor')) {
             echo '<div class="notice notice-warning is-dismissible">';
-            echo '<p><strong>Notice:</strong> Tiny Widget Manager will not be operational because the block-based widget editor is currently <strong>enabled</strong>. You can disable it in <a href="' . esc_url(admin_url('options-general.php?page=twim-settings')) . '">Tiny Widget Manager settings</a>.</p>';
+            // translators: %s: URL to Tiny Widget Manager settings page.
+            echo '<p>' . sprintf(__('<strong>Notice:</strong> Tiny Widget Manager will not be operational because the block-based widget editor is currently <strong>enabled</strong>. You can disable it in <a href="%s">Tiny Widget Manager settings</a>', 'twim'),  esc_url(admin_url('options-general.php?page=twim-settings'))) . '.</p>';
             echo '</div>';
         }
     }
@@ -531,7 +534,8 @@ class TWIM_Hooks
                 $instance = $option[$number];
 
                 // Get visibility settings
-                $show = true;
+                $andor = $instance['twim_visibility_andor'] ?? 'and';
+                $show = ($andor === 'and');
 
                 foreach ($this->sections as $section) {
                     $mode = $instance['twim_visibility_' . $section . '_mode'] ?? false;
@@ -539,15 +543,20 @@ class TWIM_Hooks
 
                     $items = $instance['twim_visibility_' . $section . '_items'] ?? [];
                     $match = $this->match_section($section, $items);
-                    // Exit loop and set show to false as soon as "not show" is identified
-                    if (($mode === 'show' && !$match) || ($mode === 'hide' && $match)) {
-                        $show = false;
-                        break;
+
+                    if ($andor === 'or') {
+                        // Exit loop and set show to true as soon as "show" is identified
+                        if ($mode === 'show' && $match) {
+                            $show = true;
+                            break;
+                        }
+                    } else {
+                        // Exit loop and set show to false as soon as "not show" is identified
+                        if (($mode === 'show' && !$match) || ($mode === 'hide' && $match)) {
+                            $show = false;
+                            break;
+                        }
                     }
-                    // elseif ($mode === 'show' && $match) {
-                    //     $show = true;
-                    //     break;
-                    // }
                 }
 
                 // Check visibility using your logic here

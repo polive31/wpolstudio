@@ -51,7 +51,7 @@ class TWIM_Settings
 
         add_settings_field(
             'twim_disable_block_editor',
-            'Disable Block Widgets Editor',
+            __('Disable Block Widgets Editor','twim'),
             'twim_Settings::twim_render_block_editor_field',
             'twim-settings',
             'twim_main_section'
@@ -59,7 +59,7 @@ class TWIM_Settings
 
         add_settings_field(
             'twim_color_theme',
-            'Color Theme',
+            __('Color Theme','twim'),
             'twim_Settings::twim_render_color_theme_field',
             'twim-settings',
             'twim_main_section'
@@ -69,17 +69,17 @@ class TWIM_Settings
     public static function twim_render_block_editor_field()
     {
         $checked = get_option('twim_disable_block_editor') ? 'checked' : '';
-        echo '<input type="checkbox" name="twim_disable_block_editor" value="1" ' . esc_attr($checked) . '> Disable block-based widget editor (use classic)';
+        echo '<input type="checkbox" name="twim_disable_block_editor" value="1" ' . esc_attr($checked) . '>' . __('Use classic widget editor','twim');
     }
 
     public static function twim_render_color_theme_field()
     {
         $value = get_option('twim_color_theme', 'blue');
         $options = [
-            'blue'   => 'Blue',
-            'gray'   => 'Gray',
-            'orange' => 'Orange',
-            'lime'   => 'Lime',
+            'blue'   => __('Blue','twim'),
+            'gray'   => __('Gray','twim'),
+            'orange' => __('Orange','twim'),
+            'lime'   => __('Lime','twim'),
         ];
 
         echo '<select name="twim_color_theme">';

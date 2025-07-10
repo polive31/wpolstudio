@@ -1,0 +1,177 @@
+# Copyright (C) 2016 Shay Bocks
+# This file is distributed under the GPL-2.0+.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Tiny Widget Manager\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tiny-widget-"
+"manager\n"
+"POT-Creation-Date: 2025-07-10 23:49+0200\n"
+"PO-Revision-Date: 2025-07-10 23:50+0200\n"
+"Last-Translator: \n"
+"Language-Team: WPol Studio\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;esc_attr_e;_n:1,2;esc_html_e;esc_html__\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-1: *.css\n"
+
+#: includes/class-twim-hooks.php:150
+msgid "Pages"
+msgstr "Pages"
+
+#: includes/class-twim-hooks.php:151
+msgid "on selected Pages"
+msgstr "pour les pages choisies"
+
+#: includes/class-twim-hooks.php:155
+msgid "Posts"
+msgstr "Articles"
+
+#: includes/class-twim-hooks.php:156
+msgid "on selected Posts Types"
+msgstr "pour les types d'articles choisis"
+
+#: includes/class-twim-hooks.php:160
+msgid "Archives"
+msgstr "Archives"
+
+#: includes/class-twim-hooks.php:161
+msgid "on selected Archives"
+msgstr "pour les archives choisies"
+
+#: includes/class-twim-hooks.php:165
+msgid "Roles"
+msgstr "Roles"
+
+#: includes/class-twim-hooks.php:166
+msgid "for selected User Roles"
+msgstr "pour les utilisateurs choisis"
+
+#: includes/class-twim-hooks.php:168
+msgid "Logged-out"
+msgstr "Déconnecté"
+
+#: includes/class-twim-hooks.php:169
+msgid "Logged-in"
+msgstr "Connecté"
+
+#: includes/class-twim-hooks.php:170
+msgid "Admin"
+msgstr "Admin"
+
+#: includes/class-twim-hooks.php:171
+msgid "Editor"
+msgstr "Editeur"
+
+#: includes/class-twim-hooks.php:172
+msgid "Subscriber"
+msgstr "Abonné"
+
+#: includes/class-twim-hooks.php:176
+msgid "Devices"
+msgstr "Appareils"
+
+#: includes/class-twim-hooks.php:177
+msgid "on selected Devices"
+msgstr "pour les appareils choisis"
+
+#: includes/class-twim-hooks.php:179
+msgid "Computer"
+msgstr "Ordinateur"
+
+#: includes/class-twim-hooks.php:181
+msgid "Mobile"
+msgstr "Mobile"
+
+#: includes/class-twim-hooks.php:210
+msgid "all conditions are met"
+msgstr "toutes les conditions sont vraies"
+
+#: includes/class-twim-hooks.php:211
+msgid "any \"show\" condition is met"
+msgstr "au moins une condition \"afficher\" est vraie"
+
+#: includes/class-twim-hooks.php:216
+msgid "Show if "
+msgstr "Afficher si "
+
+#: includes/class-twim-hooks.php:252
+msgid "CSS classes"
+msgstr "Classes CSS"
+
+#: includes/class-twim-hooks.php:278
+msgid "This feature is only available on Tiny Manager Pro."
+msgstr "Cette fonction est uniquement disponible dans Tiny Manager Pro."
+
+#: includes/class-twim-hooks.php:282
+msgid "Hide "
+msgstr "Masquer "
+
+#: includes/class-twim-hooks.php:283
+msgid "Show "
+msgstr "Afficher "
+
+#: includes/class-twim-hooks.php:286
+msgid "Select items..."
+msgstr "Choisissez..."
+
+#: includes/class-twim-hooks.php:369
+msgid "Archive Author"
+msgstr "Archive Auteur"
+
+#: includes/class-twim-hooks.php:504
+#, php-format
+msgid ""
+"<strong>Notice:</strong> Tiny Widget Manager will not be operational because "
+"the block-based widget editor is currently <strong>enabled</strong>. You can "
+"disable it in <a href=\"%s\">Tiny Widget Manager settings</a>"
+msgstr ""
+"<strong>IMPORTANT:</strong> Tiny Widget Manager ne pourra pas fonctionner "
+"car la page des widgets actuellement en mode <strong>éditeur de blocs</"
+"strong>. Vous pouvez désactiver ce mode et revenir à l'interface classique "
+"dans les <a href=\"%s\">la page des options</a>"
+
+#: includes/class-twim-settings.php:54
+msgid "Disable Block Widgets Editor"
+msgstr "Désactiver l'éditeur de widgets par blocs"
+
+#: includes/class-twim-settings.php:62
+msgid "Color Theme"
+msgstr "Thème des couleurs"
+
+#: includes/class-twim-settings.php:72
+msgid "Use classic widget editor"
+msgstr "Revenir à l'éditeur classique"
+
+#: includes/class-twim-settings.php:79
+msgid "Blue"
+msgstr "Bleu"
+
+#: includes/class-twim-settings.php:80
+msgid "Gray"
+msgstr "Gris"
+
+#: includes/class-twim-settings.php:81
+msgid "Orange"
+msgstr "Orange"
+
+#: includes/class-twim-settings.php:82
+msgid "Lime"
+msgstr "Vert"
+
+#~ msgid "Disable block-based widget editor (use classic)"
+#~ msgstr ""
+#~ "Désactiver l'éditeur de widgets par blocs (revenir à l'éditeur classique)"
+
+#~ msgid "Manage widget visibility."
+#~ msgstr "Gérer la visibilité de vos widgets."

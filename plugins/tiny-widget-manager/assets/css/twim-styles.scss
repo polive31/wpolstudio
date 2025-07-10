@@ -48,6 +48,17 @@ $themes: (blue: (widget-bg: #d3eaf1,
     margin-bottom: 15px;
 }
 
+.twim-wrap {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    padding: 5px 0;
+    margin-bottom: 10px;
+}
+
+.twim-label {
+    margin-bottom: 5px;
+}
+
 .twim-tabs {
     width: 100%;
     padding: 5px;
@@ -65,13 +76,16 @@ p.twim-andor {
 }
 
 .twim-tab-nav {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+    // display: grid;
+    // grid-template-columns: 1fr 1fr 1fr;
     gap: 2px;
     margin-bottom: 0;
     // width: 100%;
-    border-top: 1px solid;
-    border-bottom: 1px solid;
+    // border-top: 1px solid;
+    // border-bottom: 1px solid;
     padding: 0 5px;
 
     &::-webkit-scrollbar {
@@ -92,9 +106,9 @@ p.twim-andor {
         align-items: center;
         margin-bottom: 0;
         transition: all 0.3s ease-in-out;
-        border-radius: 5px 5px 0 0;
-        border-top: 1px solid gray;
-        border-right: 1px solid gray;
+        // border-radius: 5px 5px 0 0;
+        // border-top: 1px solid gray;
+        // border-right: 1px solid gray;
         // margin-right: 2px;
 
         &:hover {
@@ -121,6 +135,22 @@ p.twim-andor {
     }
 }
 
+.twim-selectize-showhide {
+    .selectize-dropdown-content>div {
+        padding: 8px 12px;
+        /* adjust for comfort */
+        font-size: 14px;
+        /* or your preferred size */
+        transition: background-color 0.3s ease-in-out;
+
+        &:hover {
+            background-color: red;
+        }
+    }
+}
+
+
+
 // =======================
 // Theme styles
 // =======================
@@ -130,17 +160,18 @@ $colors in $themes {
 
     .twim-widget-controls.color-theme-#{$name} {
 
-
         .twim-tabs {
             background: map-get($colors, widget-bg);
             border-color: map-get($colors, border);
         }
 
-        .twim-tab-content,
-        .twim-tab-nav {
+        .twim-wrap {
             background: map-get($colors, nav-bg);
             border-color: map-get($colors, border);
+        }
 
+        .twim-tab-content,
+        .twim-tab-nav {
             &::-webkit-scrollbar-thumb {
                 background: map-get($colors, scrollbar-thumb);
             }
@@ -201,6 +232,16 @@ $colors in $themes {
             border: none;
             text-shadow: none;
         }
+
+        // Color style for show/hide select dropdown list
+        .twim-selectize-showhide {
+            .selectize-dropdown-content>div {
+                &:hover {
+                    background-color: map-get($colors, widget-bg);
+                }
+            }
+        }
+
     }
 }
 
