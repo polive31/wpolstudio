@@ -127,6 +127,28 @@
         initCwmWidgetControls(widget);
     });
 
+
+    /* ----------------------------------------------------------------------------------------------------------------*/
+    /*                                                 Disable logic if "disable" chosen
+    /* ----------------------------------------------------------------------------------------------------------------*/
+    function toggleTWIMWrap($select) {
+        var $wrap = $select.closest('.twim-tabs').find('.twim-wrap');
+        if ($select.val() === 'disable') {
+            $wrap.addClass('twim-disabled');
+        } else {
+            $wrap.removeClass('twim-disabled');
+        }
+    }
+
+    $('.twim-andor').each(function(){
+        toggleTWIMWrap($(this));
+    });
+
+    $(document).on('change', '.twim-andor', function(){
+        toggleTWIMWrap($(this));
+    });
+
+
     /* ----------------------------------------------------------------------------------------------------------------*/
     /*                                                 STORE LAST ACTIVE NAV TAB
     /* ----------------------------------------------------------------------------------------------------------------*/

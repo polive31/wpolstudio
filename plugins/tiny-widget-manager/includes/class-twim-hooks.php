@@ -207,14 +207,17 @@ class TWIM_Hooks
         // Before tabs section (AND/OR input)
         $andor_value = $instance['twim_visibility_andor'] ?? 'and';
         $andor_input = '<select name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_andor]" class="twim-andor">';
-        $andor_input .= '<option value="and"' . selected($andor_value, 'and', false) . '>' . __('all conditions are met', 'twim') . '</option>';
-        $andor_input .= '<option value="or"' . selected($andor_value, 'or', false) . '>' . __('any "show" condition is met', 'twim') . '</option>';
+        $andor_input .= '<option value="and"' . selected($andor_value, 'and', false) . '>' . __('Show if all conditions are met', 'twim') . '</option>';
+        $andor_input .= '<option value="or"' . selected($andor_value, 'or', false) . '>' . __('Show if any condition is met', 'twim') . '</option>';
+        $andor_input .= '<option value="disable"' . selected($andor_value, 'disable', false) . '>' . __('Do not consider conditions below', 'twim') . '</option>';
         $andor_input .= '</select>';
 
+        // Maybe set disable class
+        $class_disable = $andor_value=='disable' ? 'twim-disabled' : '';
 
         echo '<div class="twim-tabs">';
-        echo '<p class="twim-andor">' . __('Show if ', 'twim') . $andor_input . '</p>';
-        echo '<div class="twim-wrap">';
+        echo '<p class="twim-andor-wrap">' . $andor_input . '</p>';
+        echo '<div class="twim-wrap ' . $class_disable . '">';
         echo '<ul class="twim-tab-nav">';
 
         // Display tabs for each section

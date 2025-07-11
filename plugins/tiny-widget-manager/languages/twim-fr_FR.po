@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: Tiny Widget Manager\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tiny-widget-"
 "manager\n"
-"POT-Creation-Date: 2025-07-10 23:49+0200\n"
-"PO-Revision-Date: 2025-07-10 23:50+0200\n"
+"POT-Creation-Date: 2025-07-11 08:34+0200\n"
+"PO-Revision-Date: 2025-07-11 08:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: WPol Studio\n"
 "Language: fr\n"
@@ -94,42 +94,42 @@ msgid "Mobile"
 msgstr "Mobile"
 
 #: includes/class-twim-hooks.php:210
-msgid "all conditions are met"
-msgstr "toutes les conditions sont vraies"
+msgid "Show if all conditions are met"
+msgstr "Afficher si toutes les conditions sont vraies"
 
 #: includes/class-twim-hooks.php:211
-msgid "any \"show\" condition is met"
-msgstr "au moins une condition \"afficher\" est vraie"
+msgid "Show if any condition is met"
+msgstr "Afficher si au moins une condition est vraie"
 
-#: includes/class-twim-hooks.php:216
-msgid "Show if "
-msgstr "Afficher si "
+#: includes/class-twim-hooks.php:212
+msgid "Do not consider conditions below"
+msgstr "Ignorer les conditions ci-dessous"
 
-#: includes/class-twim-hooks.php:252
+#: includes/class-twim-hooks.php:253
 msgid "CSS classes"
 msgstr "Classes CSS"
 
-#: includes/class-twim-hooks.php:278
+#: includes/class-twim-hooks.php:279
 msgid "This feature is only available on Tiny Manager Pro."
 msgstr "Cette fonction est uniquement disponible dans Tiny Manager Pro."
 
-#: includes/class-twim-hooks.php:282
+#: includes/class-twim-hooks.php:283
 msgid "Hide "
 msgstr "Masquer "
 
-#: includes/class-twim-hooks.php:283
+#: includes/class-twim-hooks.php:284
 msgid "Show "
 msgstr "Afficher "
 
-#: includes/class-twim-hooks.php:286
+#: includes/class-twim-hooks.php:287
 msgid "Select items..."
 msgstr "Choisissez..."
 
-#: includes/class-twim-hooks.php:369
+#: includes/class-twim-hooks.php:370
 msgid "Archive Author"
 msgstr "Archive Auteur"
 
-#: includes/class-twim-hooks.php:504
+#: includes/class-twim-hooks.php:505
 #, php-format
 msgid ""
 "<strong>Notice:</strong> Tiny Widget Manager will not be operational because "
@@ -168,6 +168,9 @@ msgstr "Orange"
 #: includes/class-twim-settings.php:82
 msgid "Lime"
 msgstr "Vert"
+
+#~ msgid "Show if "
+#~ msgstr "Afficher si "
 
 #~ msgid "Disable block-based widget editor (use classic)"
 #~ msgstr ""

@@ -44,6 +44,12 @@ $themes: (blue: (widget-bg: #d3eaf1,
 // Base styles
 // =======================
 
+.twim-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}
+
 .twim-widget-controls {
     margin-bottom: 15px;
 }

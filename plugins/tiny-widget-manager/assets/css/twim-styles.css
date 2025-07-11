@@ -1,3 +1,11 @@
+.twim-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
 .twim-widget-controls {
   margin-bottom: 15px;
 }
