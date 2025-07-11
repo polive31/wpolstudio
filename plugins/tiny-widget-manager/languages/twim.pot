@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-11T06:33:40+00:00\n"
+"POT-Creation-Date: 2025-07-11T12:35:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: twim\n"
@@ -39,7 +39,7 @@ msgid "Pages"
 msgstr ""
 
 #: includes/class-twim-hooks.php:151
-msgid "on selected Pages"
+msgid "on Pages..."
 msgstr ""
 
 #: includes/class-twim-hooks.php:155
@@ -47,7 +47,7 @@ msgid "Posts"
 msgstr ""
 
 #: includes/class-twim-hooks.php:156
-msgid "on selected Posts Types"
+msgid "on posts of Type..."
 msgstr ""
 
 #: includes/class-twim-hooks.php:160
@@ -55,7 +55,7 @@ msgid "Archives"
 msgstr ""
 
 #: includes/class-twim-hooks.php:161
-msgid "on selected Archives"
+msgid "on Archives..."
 msgstr ""
 
 #: includes/class-twim-hooks.php:165
@@ -63,7 +63,7 @@ msgid "Roles"
 msgstr ""
 
 #: includes/class-twim-hooks.php:166
-msgid "for selected User Roles"
+msgid "for User Roles..."
 msgstr ""
 
 #: includes/class-twim-hooks.php:168
@@ -91,7 +91,7 @@ msgid "Devices"
 msgstr ""
 
 #: includes/class-twim-hooks.php:177
-msgid "on selected Devices"
+msgid "on devices..."
 msgstr ""
 
 #: includes/class-twim-hooks.php:179
@@ -114,32 +114,32 @@ msgstr ""
 msgid "Do not consider conditions below"
 msgstr ""
 
-#: includes/class-twim-hooks.php:253
+#: includes/class-twim-hooks.php:255
 msgid "CSS classes"
 msgstr ""
 
-#: includes/class-twim-hooks.php:279
+#: includes/class-twim-hooks.php:281
 msgid "This feature is only available on Tiny Manager Pro."
 msgstr ""
 
-#: includes/class-twim-hooks.php:283
+#: includes/class-twim-hooks.php:285
 msgid "Hide "
 msgstr ""
 
-#: includes/class-twim-hooks.php:284
+#: includes/class-twim-hooks.php:286
 msgid "Show "
 msgstr ""
 
-#: includes/class-twim-hooks.php:287
+#: includes/class-twim-hooks.php:289
 msgid "Select items..."
 msgstr ""
 
-#: includes/class-twim-hooks.php:370
+#: includes/class-twim-hooks.php:372
 msgid "Archive Author"
 msgstr ""
 
 #. translators: %s: URL to Tiny Widget Manager settings page.
-#: includes/class-twim-hooks.php:505
+#: includes/class-twim-hooks.php:507
 #, php-format
 msgid "<strong>Notice:</strong> Tiny Widget Manager will not be operational because the block-based widget editor is currently <strong>enabled</strong>. You can disable it in <a href=\"%s\">Tiny Widget Manager settings</a>"
 msgstr ""

@@ -148,22 +148,22 @@ class TWIM_Hooks
         $full_options = [
             'pages' => [
                 'title' => __('Pages', 'twim'),
-                'label' => __('on selected Pages', 'twim'),
+                'label' => __('on Pages...', 'twim'),
                 'items' => $this->pages,
             ],
             'posts' => [
                 'title' => __('Posts', 'twim'),
-                'label' => __('on selected Posts Types', 'twim'),
+                'label' => __('on posts of Type...', 'twim'),
                 'items' => $this->post_types,
             ],
             'archives' => [
                 'title' => __('Archives', 'twim'),
-                'label' => __('on selected Archives', 'twim'),
+                'label' => __('on Archives...', 'twim'),
                 'items' => $this->taxonomies,
             ],
             'roles' => [
                 'title' => __('Roles', 'twim'),
-                'label' => __('for selected User Roles', 'twim'),
+                'label' => __('for User Roles...', 'twim'),
                 'items' => [
                     'logged_out'    => __('Logged-out', 'twim'),
                     'logged_in'     => __('Logged-in', 'twim'),
@@ -174,7 +174,7 @@ class TWIM_Hooks
             ],
             'devices' => [
                 'title' => __('Devices', 'twim'),
-                'label' => __('on selected Devices', 'twim'),
+                'label' => __('on devices...', 'twim'),
                 'items' => [
                     'desktop' => __('Computer', 'twim'),
                     // 'tablet' => 'Tablette',
