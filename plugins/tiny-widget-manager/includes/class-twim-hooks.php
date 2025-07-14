@@ -23,7 +23,7 @@ class TWIM_Hooks
         return self::$instance;
     }
 
-    const PLUGIN_VERSION = '1.0';
+    const PLUGIN_VERSION = '1.0.1';
 
     private static $PLUGIN_URI = null;
     private static $PLUGIN_PATH = null;
