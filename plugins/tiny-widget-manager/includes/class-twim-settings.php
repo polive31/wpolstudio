@@ -99,6 +99,7 @@ class TWIM_Settings
         ?>
         <div class="wrap">
             <h1>Widget Visibility Settings</h1>
+            <p>Plugin Styles & Scripts version : <?= TWIM_Hooks::PLUGIN_VERSION; ?></p>
             <form method="post" action="options.php">
                 <?php
                 settings_fields('twim_settings_group');
