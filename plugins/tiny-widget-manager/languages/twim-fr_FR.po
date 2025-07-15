@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: Tiny Widget Manager\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tiny-widget-"
 "manager\n"
-"POT-Creation-Date: 2025-07-15 22:43+0200\n"
-"PO-Revision-Date: 2025-07-15 22:48+0200\n"
+"POT-Creation-Date: 2025-07-15 23:47+0200\n"
+"PO-Revision-Date: 2025-07-15 23:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: WPol Studio\n"
 "Language: fr\n"
@@ -129,11 +129,15 @@ msgstr "Afficher "
 msgid "Select items..."
 msgstr "Choisissez..."
 
-#: includes/class-twim-hooks.php:412
-msgid "Archive Author"
-msgstr "Archive Auteur"
+#: includes/class-twim-hooks.php:409
+msgid "Any Archive"
+msgstr "Toutes"
 
-#: includes/class-twim-hooks.php:547
+#: includes/class-twim-hooks.php:413
+msgid "Author"
+msgstr "Auteur"
+
+#: includes/class-twim-hooks.php:548
 #, php-format
 msgid ""
 "<strong>Notice:</strong> Tiny Widget Manager will not be operational because "

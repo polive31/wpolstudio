@@ -406,10 +406,11 @@ class TWIM_Hooks
     {
 
         $archives = [];
+        $archives['all'] = __('Any Archive', 'twim');
         foreach ($this->post_types as $post_type => $label) {
-            $archives[$post_type] = 'Archive ' . ucfirst($label);
+            $archives[$post_type] = ucfirst($label);
         }
-        $archives['author'] = __('Archive Author', 'twim');
+        $archives['author'] = __('Author', 'twim');
 
 
         $taxonomies = get_taxonomies(
@@ -423,7 +424,7 @@ class TWIM_Hooks
         foreach ($taxonomies as $tax) {
             $tax_obj = get_taxonomy($tax);
             if ($tax_obj) {
-                $archives[$tax] = 'Archive ' . $tax_obj->labels->name;
+                $archives[$tax] = $tax_obj->labels->name;
                 // Get terms for this taxonomy
                 $terms = get_terms([
                     'taxonomy' => $tax,
@@ -431,7 +432,7 @@ class TWIM_Hooks
                 ]);
                 if (!is_wp_error($terms) && !empty($terms)) {
                     foreach ($terms as $term) {
-                        $archives[$tax . ':' . $term->term_id] = 'Archive ' . $tax_obj->labels->name . ': ' . $term->name;
+                        $archives[$tax . ':' . $term->term_id] = $tax_obj->labels->name . ': ' . $term->name;
                     }
                 }
             }
@@ -647,9 +648,11 @@ class TWIM_Hooks
             case 'archives':
                 foreach ($items as $item) {
                     // Check if term archive
-                    if (str_contains($item, ':')) {
+                    if ($item == 'all') {
+                        return is_archive();
+                    } elseif (str_contains($item, ':')) {
                         [$tax, $term_id] = explode(':', $item);
-                        if (($tax == 'post_tag' && is_tag($term_id)) || is_tax($tax, $term_id)) return true;
+                        if (($tax == 'category' && is_category($term_id)) || ($tax == 'post_tag' && is_tag($term_id)) || is_tax($tax, $term_id)) return true;
                     } elseif (
                         (post_type_exists($item) && is_post_type_archive($item)) ||
                         (taxonomy_exists($item) && is_tax($item)) ||
