@@ -27,7 +27,7 @@ function twim_start_plugin() {
     load_plugin_textdomain('twim', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
     // Libraries
-    require_once 'vendor/vendor/autoload.php';
+    require_once 'vendor/autoload.php';
 
     // Load the plugin class.
     require_once 'includes/class-tiny-widget-manager.php';
