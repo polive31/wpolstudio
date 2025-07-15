@@ -40,6 +40,7 @@ class TWIM_Hooks
     private $pages;
     private $taxonomies;
     private $color_theme;
+    private $debug_mode;
 
     /* private constructor ensures that the class can only be */
     /* created using the get_instance static function */
@@ -64,7 +65,7 @@ class TWIM_Hooks
             // $this->posts = $this->_get_all_posts();
             $this->post_types = $this->_get_post_types();
             $this->taxonomies = $this->_get_archive_pages();
-            $this->hydrate_options();
+            $this->hydrate_admin_options();
         }
         $this->args = [];
         $this->disable = false;
@@ -72,7 +73,44 @@ class TWIM_Hooks
         // $this->tablet = false;
         $this->loggedin = is_user_logged_in();
         $this->user = wp_get_current_user();
+        // Debug Mode
+        $this->debug_mode = get_option('twim_debug_mode');
     }
+
+    /**
+     * maybe_append_debug_info
+     *
+     * @param  mixed $instance
+     * @param  mixed $widget
+     * @param  mixed $args
+     * @return void
+     */
+    public function maybe_append_debug_info($instance, $widget, $args)
+    {
+        $id_base = $widget->id_base;
+        $widget_id = $widget->id;
+
+        $debug_html = '<div class="twim-debug-info" style="border:1px dashed red; padding:5px; font-size:11px; margin-top:5px;">';
+        $debug_html .= '<strong>TWIM Debug Info</strong><br>';
+        $debug_html .= 'Widget ID: ' . esc_html($widget_id) . '<br>';
+        $debug_html .= 'ID Base: ' . esc_html($id_base) . '<br>';
+        if (isset($instance['twim_visibility_andor'])) {
+            $debug_html .= 'Visibility AND/OR: ' . esc_html($instance['twim_visibility_andor']) . '<br>';
+        }
+        $debug_html .= 'wp_is_mobile() : ' . ( wp_is_mobile() ? 'Is mobile' : 'Is not mobile' ) . '<br>';
+        foreach ($this->sections as $section) {
+            $mode = $instance['twim_visibility_' . $section . '_mode'] ?? 'none';
+            $items = $instance['twim_visibility_' . $section . '_items'] ?? [];
+            $debug_html .= ucfirst($section) . ' Mode: ' . esc_html($mode) . '<br>';
+            $debug_html .= ucfirst($section) . ' Items: ' . implode(', ', array_map('esc_html', (array)$items)) . '<br>';
+        }
+        $debug_html .= '</div>';
+
+        echo $debug_html;
+
+        return $instance;
+    }
+
 
 
     /**
@@ -143,7 +181,7 @@ class TWIM_Hooks
      *
      * @return void
      */
-    public function hydrate_options()
+    public function hydrate_admin_options()
     {
         $full_options = [
             'pages' => [
@@ -213,7 +251,7 @@ class TWIM_Hooks
         $andor_input .= '</select>';
 
         // Maybe set disable class
-        $class_disable = $andor_value=='disable' ? 'twim-disabled' : '';
+        $class_disable = $andor_value == 'disable' ? 'twim-disabled' : '';
 
         echo '<div class="twim-tabs">';
         echo '<p class="twim-andor-wrap">' . $andor_input . '</p>';

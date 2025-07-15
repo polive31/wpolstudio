@@ -42,6 +42,10 @@ class TWIM_Settings
             'sanitize_callback' => 'sanitize_text_field'
         ]);
 
+        register_setting('twim_settings_group', 'twim_debug_mode', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+
         add_settings_section(
             'twim_main_section',
             'General Settings',
@@ -53,6 +57,14 @@ class TWIM_Settings
             'twim_disable_block_editor',
             __('Disable Block Widgets Editor','twim'),
             'twim_Settings::twim_render_block_editor_field',
+            'twim-settings',
+            'twim_main_section'
+        );
+
+        add_settings_field(
+            'twim_debug_mode',
+            __('Debug Mode','twim'),
+            'twim_Settings::twim_render_debug_mode_field',
             'twim-settings',
             'twim_main_section'
         );
@@ -70,6 +82,12 @@ class TWIM_Settings
     {
         $checked = get_option('twim_disable_block_editor') ? 'checked' : '';
         echo '<input type="checkbox" name="twim_disable_block_editor" value="1" ' . esc_attr($checked) . '>' . __('Use classic widget editor','twim');
+    }
+
+    public static function twim_render_debug_mode_field()
+    {
+        $checked = get_option('twim_debug_mode') ? 'checked' : '';
+        echo '<input type="checkbox" name="twim_debug_mode" value="1" ' . esc_attr($checked) . '>' . __('Enable debug mode','twim');
     }
 
     public static function twim_render_color_theme_field()
