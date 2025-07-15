@@ -26,10 +26,14 @@ function twim_start_plugin() {
     // Load the plugin textdomain
     load_plugin_textdomain('twim', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
+    // Libraries
+    require_once 'vendor/vendor/autoload.php';
+
     // Load the plugin class.
     require_once 'includes/class-tiny-widget-manager.php';
     require_once 'includes/class-twim-hooks.php';
     require_once 'includes/class-twim-settings.php';
+    require_once 'includes/class-twim-helpers.php';
 
     // Initialize the plugin.
     Tiny_Widget_Manager::get_instance();

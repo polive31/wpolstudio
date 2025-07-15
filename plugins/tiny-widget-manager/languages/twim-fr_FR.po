@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: Tiny Widget Manager\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tiny-widget-"
 "manager\n"
-"POT-Creation-Date: 2025-07-11 14:35+0200\n"
-"PO-Revision-Date: 2025-07-11 14:38+0200\n"
+"POT-Creation-Date: 2025-07-15 22:43+0200\n"
+"PO-Revision-Date: 2025-07-15 22:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: WPol Studio\n"
 "Language: fr\n"
@@ -25,111 +25,115 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPathExcluded-1: *.css\n"
 
-#: includes/class-twim-hooks.php:150
+#: includes/class-twim-hooks.php:189
 msgid "Pages"
 msgstr "Pages"
 
-#: includes/class-twim-hooks.php:151
+#: includes/class-twim-hooks.php:190
 msgid "on Pages..."
 msgstr "sur les pages..."
 
-#: includes/class-twim-hooks.php:155
+#: includes/class-twim-hooks.php:194
 msgid "Posts"
 msgstr "Articles"
 
-#: includes/class-twim-hooks.php:156
+#: includes/class-twim-hooks.php:195
 msgid "on posts of Type..."
 msgstr "pour les articles de type..."
 
-#: includes/class-twim-hooks.php:160
+#: includes/class-twim-hooks.php:199
 msgid "Archives"
 msgstr "Archives"
 
-#: includes/class-twim-hooks.php:161
+#: includes/class-twim-hooks.php:200
 msgid "on Archives..."
 msgstr "dans les archives de type..."
 
-#: includes/class-twim-hooks.php:165
+#: includes/class-twim-hooks.php:204
 msgid "Roles"
 msgstr "Roles"
 
-#: includes/class-twim-hooks.php:166
+#: includes/class-twim-hooks.php:205
 msgid "for User Roles..."
 msgstr "pour les utilisateurs..."
 
-#: includes/class-twim-hooks.php:168
+#: includes/class-twim-hooks.php:207
 msgid "Logged-out"
 msgstr "Déconnecté"
 
-#: includes/class-twim-hooks.php:169
+#: includes/class-twim-hooks.php:208
 msgid "Logged-in"
 msgstr "Connecté"
 
-#: includes/class-twim-hooks.php:170
+#: includes/class-twim-hooks.php:209
 msgid "Admin"
 msgstr "Admin"
 
-#: includes/class-twim-hooks.php:171
+#: includes/class-twim-hooks.php:210
 msgid "Editor"
 msgstr "Editeur"
 
-#: includes/class-twim-hooks.php:172
+#: includes/class-twim-hooks.php:211
 msgid "Subscriber"
 msgstr "Abonné"
 
-#: includes/class-twim-hooks.php:176
+#: includes/class-twim-hooks.php:215
 msgid "Devices"
 msgstr "Appareils"
 
-#: includes/class-twim-hooks.php:177
+#: includes/class-twim-hooks.php:216
 msgid "on devices..."
 msgstr "sur les appareils..."
 
-#: includes/class-twim-hooks.php:179
+#: includes/class-twim-hooks.php:218
 msgid "Computer"
 msgstr "Ordinateur"
 
-#: includes/class-twim-hooks.php:181
+#: includes/class-twim-hooks.php:220
 msgid "Mobile"
 msgstr "Mobile"
 
-#: includes/class-twim-hooks.php:210
+#: includes/class-twim-hooks.php:249
 msgid "Show if all conditions are met"
 msgstr "Afficher si toutes les conditions sont vraies"
 
-#: includes/class-twim-hooks.php:211
+#: includes/class-twim-hooks.php:250
 msgid "Show if any condition is met"
 msgstr "Afficher si au moins une condition est vraie"
 
-#: includes/class-twim-hooks.php:212
-msgid "Do not consider conditions below"
-msgstr "Ignorer les conditions ci-dessous"
+#: includes/class-twim-hooks.php:251
+msgid "Always show"
+msgstr "Toujours afficher"
 
-#: includes/class-twim-hooks.php:255
+#: includes/class-twim-hooks.php:252
+msgid "Always hide"
+msgstr "Ne jamais afficher"
+
+#: includes/class-twim-hooks.php:295
 msgid "CSS classes"
 msgstr "Classes CSS"
 
-#: includes/class-twim-hooks.php:281
+#: includes/class-twim-hooks.php:321
 msgid "This feature is only available on Tiny Manager Pro."
 msgstr "Cette fonction est uniquement disponible dans Tiny Manager Pro."
 
-#: includes/class-twim-hooks.php:285
+#: includes/class-twim-hooks.php:325
 msgid "Hide "
 msgstr "Masquer "
 
-#: includes/class-twim-hooks.php:286
+#: includes/class-twim-hooks.php:326
 msgid "Show "
 msgstr "Afficher "
 
-#: includes/class-twim-hooks.php:289
+#: includes/class-twim-hooks.php:329
 msgid "Select items..."
 msgstr "Choisissez..."
 
-#: includes/class-twim-hooks.php:372
+#: includes/class-twim-hooks.php:412
 msgid "Archive Author"
 msgstr "Archive Auteur"
 
-#: includes/class-twim-hooks.php:507
+#: includes/class-twim-hooks.php:547
 #, php-format
 msgid ""
 "<strong>Notice:</strong> Tiny Widget Manager will not be operational because "
@@ -141,33 +145,44 @@ msgstr ""
 "strong>. Vous pouvez désactiver ce mode et revenir à l'interface classique "
 "dans les <a href=\"%s\">la page des options</a>"
 
-#: includes/class-twim-settings.php:54
+#: includes/class-twim-settings.php:58
 msgid "Disable Block Widgets Editor"
 msgstr "Désactiver l'éditeur de widgets par blocs"
 
-#: includes/class-twim-settings.php:62
+#: includes/class-twim-settings.php:66
+msgid "Debug Mode"
+msgstr "Mode débogage"
+
+#: includes/class-twim-settings.php:74
 msgid "Color Theme"
 msgstr "Thème des couleurs"
 
-#: includes/class-twim-settings.php:72
+#: includes/class-twim-settings.php:84
 msgid "Use classic widget editor"
 msgstr "Revenir à l'éditeur classique"
 
-#: includes/class-twim-settings.php:79
+#: includes/class-twim-settings.php:90
+msgid "Enable debug mode"
+msgstr "Activer le mode débogage"
+
+#: includes/class-twim-settings.php:97
 msgid "Blue"
 msgstr "Bleu"
 
-#: includes/class-twim-settings.php:80
+#: includes/class-twim-settings.php:98
 msgid "Gray"
 msgstr "Gris"
 
-#: includes/class-twim-settings.php:81
+#: includes/class-twim-settings.php:99
 msgid "Orange"
 msgstr "Orange"
 
-#: includes/class-twim-settings.php:82
+#: includes/class-twim-settings.php:100
 msgid "Lime"
 msgstr "Vert"
+
+#~ msgid "Do not consider conditions below"
+#~ msgstr "Ignorer les conditions ci-dessous"
 
 #~ msgid "on selected Pages"
 #~ msgstr "pour les pages choisies"

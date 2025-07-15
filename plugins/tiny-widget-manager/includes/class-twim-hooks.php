@@ -69,7 +69,8 @@ class TWIM_Hooks
         }
         $this->args = [];
         $this->disable = false;
-        $this->mobile = wp_is_mobile();
+        // $this->mobile = wp_is_mobile();
+        $this->mobile = TWIMH::is_mobile();
         // $this->tablet = false;
         $this->loggedin = is_user_logged_in();
         $this->user = wp_get_current_user();
@@ -97,7 +98,7 @@ class TWIM_Hooks
         if (isset($instance['twim_visibility_andor'])) {
             $debug_html .= 'Visibility AND/OR: ' . esc_html($instance['twim_visibility_andor']) . '<br>';
         }
-        $debug_html .= 'wp_is_mobile() : ' . ( wp_is_mobile() ? 'Is mobile' : 'Is not mobile' ) . '<br>';
+        $debug_html .= 'wp_is_mobile() : ' . (TWIMH::is_mobile() ? 'Is mobile' : 'Is not mobile') . '<br>';
         foreach ($this->sections as $section) {
             $mode = $instance['twim_visibility_' . $section . '_mode'] ?? 'none';
             $items = $instance['twim_visibility_' . $section . '_items'] ?? [];
@@ -247,11 +248,12 @@ class TWIM_Hooks
         $andor_input = '<select name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_andor]" class="twim-andor">';
         $andor_input .= '<option value="and"' . selected($andor_value, 'and', false) . '>' . __('Show if all conditions are met', 'twim') . '</option>';
         $andor_input .= '<option value="or"' . selected($andor_value, 'or', false) . '>' . __('Show if any condition is met', 'twim') . '</option>';
-        $andor_input .= '<option value="disable"' . selected($andor_value, 'disable', false) . '>' . __('Do not consider conditions below', 'twim') . '</option>';
+        $andor_input .= '<option value="show"' . selected($andor_value, 'show', false) . '>' . __('Always show', 'twim') . '</option>';
+        $andor_input .= '<option value="hide"' . selected($andor_value, 'hide', false) . '>' . __('Always hide', 'twim') . '</option>';
         $andor_input .= '</select>';
 
         // Maybe set disable class
-        $class_disable = $andor_value == 'disable' ? 'twim-disabled' : '';
+        $class_disable = in_array($andor_value, ['show', 'hide']) ? 'twim-disabled' : '';
 
         echo '<div class="twim-tabs">';
         echo '<p class="twim-andor-wrap">' . $andor_input . '</p>';
@@ -576,26 +578,34 @@ class TWIM_Hooks
 
                 // Get visibility settings
                 $andor = $instance['twim_visibility_andor'] ?? 'and';
-                $show = ($andor === 'and');
 
-                foreach ($this->sections as $section) {
-                    $mode = $instance['twim_visibility_' . $section . '_mode'] ?? false;
-                    if (!$mode) continue;
+                // Start visibility check
 
-                    $items = $instance['twim_visibility_' . $section . '_items'] ?? [];
-                    $match = $this->match_section($section, $items);
+                if ($andor === 'show') {
+                    $show = true;
+                } elseif ($andor === 'hide') {
+                    $show = false;
+                } else {
+                    $show = ($andor === 'and');
+                    foreach ($this->sections as $section) {
+                        $mode = $instance['twim_visibility_' . $section . '_mode'] ?? false;
+                        if (!$mode) continue;
 
-                    if ($andor === 'or') {
-                        // Exit loop and set show to true as soon as "show" is identified
-                        if ($mode === 'show' && $match) {
-                            $show = true;
-                            break;
-                        }
-                    } else {
-                        // Exit loop and set show to false as soon as "not show" is identified
-                        if (($mode === 'show' && !$match) || ($mode === 'hide' && $match)) {
-                            $show = false;
-                            break;
+                        $items = $instance['twim_visibility_' . $section . '_items'] ?? [];
+                        $match = $this->match_section($section, $items);
+
+                        if ($andor === 'or') {
+                            // Exit loop and set show to true as soon as "show" is identified
+                            if ($mode === 'show' && $match) {
+                                $show = true;
+                                break;
+                            }
+                        } else {
+                            // Exit loop and set show to false as soon as "not show" is identified
+                            if (($mode === 'show' && !$match) || ($mode === 'hide' && $match)) {
+                                $show = false;
+                                break;
+                            }
                         }
                     }
                 }
