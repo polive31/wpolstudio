@@ -1,0 +1,44 @@
+/*
+ Theme Name:   GeneratePress Child
+ Theme URI:    https://generatepress.com
+ Description:  Default GeneratePress child theme
+ Author:       Tom Usborne
+ Author URI:   https://tomusborne.com
+ Template:     generatepress
+ Version:      0.1
+*/
+
+.widget.blue {
+    background-color: blue;
+    color: white;
+}
+
+.widget.orange {
+    background-color: rgb(228, 121, 0);
+    color: white;
+}
+
+.widget.purple {
+    background-color: rgb(189, 45, 247);
+    color: white;
+}
+
+.widget.green {
+    background-color: rgb(92, 247, 45);
+    color: white;
+}
+
+.widget.yellow {
+    background-color: rgb(227, 247, 45);
+    color: black;
+}
+
+.widget.pink {
+    background-color: rgb(247, 45, 186);
+    color: white;
+}
+
+.widget.red {
+    background-color: rgb(247, 45, 45);
+    color: white;
+}

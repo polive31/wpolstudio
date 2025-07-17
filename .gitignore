@@ -85,7 +85,7 @@ languages/plugins/*
 
 !/themes/
 /themes/*
-!/themes/generatepress/
+!/themes/generatepress_child/
 
 
 !/plugins/

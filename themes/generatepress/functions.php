@@ -122,16 +122,4 @@ require $theme_dir . '/inc/structure/post-meta.php';
 require $theme_dir . '/inc/structure/sidebars.php';
 require $theme_dir . '/inc/structure/search-modal.php';
 
-/* ----------------------------------------------------------------------------------------------------------------*/
-/*                                                 START CUSTOMIZATIONS
-/* ----------------------------------------------------------------------------------------------------------------*/
-
-// Copyright filter
-add_filter( 'generate_copyright', function($copyright) {
-	$copyright = '<span class="copyright">&copy; ' . date('Y') . ' ' . get_bloginfo('name') . '</span>';
-	return $copyright;
-} );
-
-// Mobile detect wrapper
-use Detection\MobileDetect;
 
