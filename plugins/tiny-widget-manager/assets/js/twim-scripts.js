@@ -1,6 +1,10 @@
 (function ($) {
     function initTwimWidgetControls(context) {
-        $(context).find('.twim-widget-controls').each(function () {
+        $(context).find('.twim-widget-controls').filter(function () {
+            if (context != document) return true;
+            const $holder = $(this).closest('.widgets-holder-wrap');
+            return !$holder.is('#available-widgets');
+        }).each(function () {
             const $container = $(this);
 
             // Tabs
@@ -12,10 +16,11 @@
                 $container.find(`.twim-tab-content[data-tab="${tab}"]`).addClass('active').show();
             });
 
-
-
             // Selectize with dropdown list
             $container.find('.twim-selectize').each(function () {
+                if (context != document && this.selectize) {
+                    this.selectize.destroy();
+                }
                 if (!this.selectize) {
                     $(this).selectize({
                         plugins: ['remove_button'],
@@ -34,6 +39,9 @@
 
             // Selectize single
             $container.find('.twim-selectize-showhide').each(function () {
+                if (context != document && this.selectize) {
+                    this.selectize.destroy();
+                }
                 if (!this.selectize) {
                     $(this).selectize({
                         // plugins: ['remove_button'],
@@ -63,57 +71,6 @@
                 }
             });
 
-
-            // Selectize with autocomplete
-            // $container.find('.twim-selectize.autocomplete').each(function () {
-            //     if (!this.selectize) {
-            //         // Selectize with autocomplete
-            //         $(this).selectize({
-            //             plugins: ['remove_button'],
-            //             delimiter: ',',
-            //             persist: false,
-            //             valueField: 'id',
-            //             labelField: 'title',
-            //             searchField: 'title',
-            //             load: function (query, callback) {
-            //                 if (!query.length) return callback();
-            //                 $.ajax({
-            //                     url: ajaxurl, // WordPress built-in AJAX handler
-            //                     type: 'POST',
-            //                     dataType: 'json',
-            //                     data: {
-            //                         action: 'twim_search_posts',
-            //                         nonce: cwmWidget.nonce, // Make sure this is localized
-            //                         q: query
-            //                     },
-            //                     error: function () {
-            //                         callback();
-            //                     },
-            //                     success: function (res) {
-            //                         callback(res.data || []);
-            //                     }
-            //                 });
-            //             }
-            //         });
-            //     }
-            // });
-
-
-            // JSON update
-            // $container.find('.twim-mode, .twim-selectize').off('change').on('change', function () {
-            //     const data = {};
-
-            //     $container.find('.twim-tab-content').each(function () {
-            //         const $tab = $(this);
-            //         const type = $tab.data('tab');
-            //         const mode = $tab.find('.twim-mode').val();
-            //         const items = $tab.find('.twim-selectize').val() || [];
-            //         data[type] = { mode, items };
-            //     });
-
-            //     $container.find('.twim-json-data').val(JSON.stringify(data));
-            // });
-
             // Active tab on load
             $container.find('.twim-tab-nav li.active').trigger('click');
         });
@@ -125,9 +82,7 @@
     });
 
     $(document).on('widget-updated widget-added', function (event, widget) {
-        setTimeout(function () {
-            initTwimWidgetControls(widget);
-        }, 3000); // adjust delay if needed (200-500ms usually sufficient)
+        initTwimWidgetControls(widget);
     });
 
 

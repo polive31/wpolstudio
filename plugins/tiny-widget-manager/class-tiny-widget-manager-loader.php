@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 /*
 * Plugin Name: Tiny Widget Manager
 * Description: Manage widget visibility.
-* Version: 1.0
+* Version: 1.0.3
 * Author: WPol Studio
 * Author URI: https://wpolstudio.com
 * Domain Path: /languages

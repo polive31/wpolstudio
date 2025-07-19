@@ -23,7 +23,7 @@ class TWIM_Hooks
         return self::$instance;
     }
 
-    const PLUGIN_VERSION = '1.0.2';
+    const PLUGIN_VERSION = '1.0.4';
 
     private static $PLUGIN_URI = null;
     private static $PLUGIN_PATH = null;
@@ -288,12 +288,12 @@ class TWIM_Hooks
             echo '<p class="twim-notice">' . esc_html__('This feature is only available on Tiny Manager Pro.', 'tiny-widget-manager') . '</p>';
         } else {
             // echo '<label>' . ucfirst($section) . ' :</label><br />';
-            echo '<select class="twim-showhide" name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_mode]" class="twim-mode">';
+            echo '<select class="twim-selectize-showhide" name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_mode]" class="twim-mode">';
             echo '<option value="show"' . selected($mode_val, 'show', false) . '>' . esc_html__('Show ', 'tiny-widget-manager') . esc_html($data['label']) . '</option>';
             echo '<option value="hide"' . selected($mode_val, 'hide', false) . '>' . esc_html__('Hide ', 'tiny-widget-manager') . esc_html($data['label']) . '</option>';
             echo '</select><br />';
 
-            echo '<select multiple name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_items][]" class="twim-selectize ' . esc_attr($autocomplete_class) . '" placeholder="' . esc_attr(esc_html__('Select items...', 'tiny-widget-manager')) . '">';
+            echo '<select class="twim-selectize ' . esc_attr($autocomplete_class) . '" multiple name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_items][]" placeholder="' . esc_attr(esc_html__('Select items...', 'tiny-widget-manager')) . '">';
             foreach ($data['items'] as $value => $label) {
                 $selected = in_array($value, $items_val) ? 'selected' : '';
                 $level = str_contains($value, ':') ? '1' : '0';
