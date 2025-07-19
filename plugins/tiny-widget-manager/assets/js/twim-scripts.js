@@ -132,7 +132,7 @@
 
 
     /* ----------------------------------------------------------------------------------------------------------------*/
-    /*                                                 Disable logic if "disable" chosen
+    /*                                          Disable logic if "disable" chosen
     /* ----------------------------------------------------------------------------------------------------------------*/
     function toggleTwimWrap($select) {
         var $wrap = $select.closest('.twim-tabs').find('.twim-wrap');

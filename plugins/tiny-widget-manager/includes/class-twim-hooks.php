@@ -78,41 +78,6 @@ class TWIM_Hooks
         $this->debug_mode = get_option('twim_debug_mode');
     }
 
-    /**
-     * maybe_append_debug_info
-     *
-     * @param  mixed $instance
-     * @param  mixed $widget
-     * @param  mixed $args
-     * @return void
-     */
-    public function maybe_append_debug_info($instance, $widget, $args)
-    {
-        $id_base = $widget->id_base;
-        $widget_id = $widget->id;
-
-        $debug_html = '<div class="twim-debug-info" style="border:1px dashed red; padding:5px; font-size:11px; margin-top:5px;">';
-        $debug_html .= '<strong>TWIM Debug Info</strong><br>';
-        $debug_html .= 'Widget ID: ' . esc_html($widget_id) . '<br>';
-        $debug_html .= 'ID Base: ' . esc_html($id_base) . '<br>';
-        if (isset($instance['twim_visibility_andor'])) {
-            $debug_html .= 'Visibility AND/OR: ' . esc_html($instance['twim_visibility_andor']) . '<br>';
-        }
-        $debug_html .= 'wp_is_mobile() : ' . (TWIMH::is_mobile() ? 'Is mobile' : 'Is not mobile') . '<br>';
-        foreach ($this->sections as $section) {
-            $mode = $instance['twim_visibility_' . $section . '_mode'] ?? 'none';
-            $items = $instance['twim_visibility_' . $section . '_items'] ?? [];
-            $debug_html .= ucfirst($section) . ' Mode: ' . esc_html($mode) . '<br>';
-            $debug_html .= ucfirst($section) . ' Items: ' . implode(', ', array_map('esc_html', (array)$items)) . '<br>';
-        }
-        $debug_html .= '</div>';
-
-        echo esc_html($debug_html);
-
-        return $instance;
-    }
-
-
 
     /**
      * enqueue_block_widget_editor_scripts
@@ -505,7 +470,7 @@ class TWIM_Hooks
 
 
     /* ----------------------------------------------------------------------------------------------------------------*/
-    /*                                                 PUBLIC CALLBACKS
+    /*                                   BLOCK EDITOR COMPATIBILITY CALLBACKS
     /* ----------------------------------------------------------------------------------------------------------------*/
 
 
@@ -563,6 +528,53 @@ class TWIM_Hooks
     }
 
 
+    /* ----------------------------------------------------------------------------------------------------------------*/
+    /*                                                 PUBLIC CALLBACKS
+    /* ----------------------------------------------------------------------------------------------------------------*/
+
+
+     /**
+     * maybe_append_debug_info
+     *
+     * @param  mixed $instance
+     * @param  mixed $widget
+     * @param  mixed $args
+     * @return void
+     */
+    public function maybe_append_debug_info($instance, $widget, $args)
+    {
+        $id_base = $widget->id_base;
+        $widget_id = $widget->id;
+
+        echo '<div class="twim-debug-info" style="border:1px dashed red; padding:5px; font-size:11px; margin-top:5px;">';
+        echo '<div class="twim-debug-section" style="padding: 10px;">';
+        echo 'Widget ID: <strong>' . esc_html($widget_id) . '</strong><br>';
+        echo 'ID Base: <strong>' . esc_html($id_base) . '</strong><br>';
+        if (isset($instance['twim_visibility_andor'])) {
+           echo 'Visibility AND/OR: <strong>' . esc_html($instance['twim_visibility_andor']) . '</strong><br>';
+        }
+        echo 'wp_is_mobile() : <strong>' . (TWIMH::is_mobile() ? 'Is mobile' : 'Is not mobile') . '</strong><br>';
+        echo '</div>';
+        foreach ($this->sections as $section) {
+            $mode = $instance['twim_visibility_' . $section . '_mode'] ?? 'none';
+            $items = $instance['twim_visibility_' . $section . '_items'] ?? [];
+            echo '<div class="twim-debug-section section-' . esc_attr($section) . '" style="border-top: 1px dashed gray;padding: 10px;">';
+            echo ucfirst($section) . ' Mode: <strong>' . esc_html($mode) . '</strong><br>';
+            echo ucfirst($section) . ' Items: <strong>' . implode(', ', array_map('esc_html', (array)$items)) . '</strong><br>';
+            echo '</div>';
+        }
+        echo '</div>';
+
+        return $instance;
+    }
+
+
+    /**
+     * filter_widgets_before_output
+     *
+     * @param  mixed $sidebars_widgets
+     * @return void
+     */
     public function filter_widgets_before_output($sidebars_widgets)
     {
         if (is_admin()) return $sidebars_widgets; // Do not interfere in admin
