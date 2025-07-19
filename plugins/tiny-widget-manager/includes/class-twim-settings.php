@@ -55,23 +55,23 @@ class TWIM_Settings
 
         add_settings_field(
             'twim_disable_block_editor',
-            __('Disable Block Widgets Editor','twim'),
+            __('Disable Block Widgets Editor', 'tiny-widget-manager'),
             'twim_Settings::twim_render_block_editor_field',
             'twim-settings',
             'twim_main_section'
         );
 
-        add_settings_field(
-            'twim_debug_mode',
-            __('Debug Mode','twim'),
-            'twim_Settings::twim_render_debug_mode_field',
-            'twim-settings',
-            'twim_main_section'
-        );
+        // add_settings_field(
+        //     'twim_debug_mode',
+        //     __('Debug Mode', 'tiny-widget-manager'),
+        //     'twim_Settings::twim_render_debug_mode_field',
+        //     'twim-settings',
+        //     'twim_main_section'
+        // );
 
         add_settings_field(
             'twim_color_theme',
-            __('Color Theme','twim'),
+            __('Color Theme', 'tiny-widget-manager'),
             'twim_Settings::twim_render_color_theme_field',
             'twim-settings',
             'twim_main_section'
@@ -81,23 +81,23 @@ class TWIM_Settings
     public static function twim_render_block_editor_field()
     {
         $checked = get_option('twim_disable_block_editor') ? 'checked' : '';
-        echo '<input type="checkbox" name="twim_disable_block_editor" value="1" ' . esc_attr($checked) . '>' . __('Use classic widget editor','twim');
+        echo '<input type="checkbox" name="twim_disable_block_editor" value="1" ' . esc_attr($checked) . '>' . esc_html__('Use classic widget editor', 'tiny-widget-manager');
     }
 
     public static function twim_render_debug_mode_field()
     {
         $checked = get_option('twim_debug_mode') ? 'checked' : '';
-        echo '<input type="checkbox" name="twim_debug_mode" value="1" ' . esc_attr($checked) . '>' . __('Enable debug mode','twim');
+        echo '<input type="checkbox" name="twim_debug_mode" value="1" ' . esc_attr($checked) . '>' . esc_html__('Enable debug mode', 'tiny-widget-manager');
     }
 
     public static function twim_render_color_theme_field()
     {
         $value = get_option('twim_color_theme', 'blue');
         $options = [
-            'blue'   => __('Blue','twim'),
-            'gray'   => __('Gray','twim'),
-            'orange' => __('Orange','twim'),
-            'lime'   => __('Lime','twim'),
+            'blue'   => __('Blue', 'tiny-widget-manager'),
+            'gray'   => __('Gray', 'tiny-widget-manager'),
+            'orange' => __('Orange', 'tiny-widget-manager'),
+            'lime'   => __('Lime', 'tiny-widget-manager'),
         ];
 
         echo '<select name="twim_color_theme">';
@@ -117,7 +117,7 @@ class TWIM_Settings
         ?>
         <div class="wrap">
             <h1>Widget Visibility Settings</h1>
-            <p>Plugin Styles & Scripts version : <?= TWIM_Hooks::PLUGIN_VERSION; ?></p>
+            <p>Plugin Styles & Scripts version : <?php echo esc_attr(TWIM_Hooks::PLUGIN_VERSION); ?></p>
             <form method="post" action="options.php">
                 <?php
                 settings_fields('twim_settings_group');

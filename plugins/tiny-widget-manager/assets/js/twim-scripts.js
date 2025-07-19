@@ -1,5 +1,5 @@
 (function ($) {
-    function initCwmWidgetControls(context) {
+    function initTwimWidgetControls(context) {
         $(context).find('.twim-widget-controls').each(function () {
             const $container = $(this);
 
@@ -11,6 +11,7 @@
                 $container.find('.twim-tab-content').removeClass('active').hide();
                 $container.find(`.twim-tab-content[data-tab="${tab}"]`).addClass('active').show();
             });
+
 
 
             // Selectize with dropdown list
@@ -120,18 +121,20 @@
     }
 
     $(document).ready(function () {
-        initCwmWidgetControls(document);
+        initTwimWidgetControls(document);
     });
 
     $(document).on('widget-updated widget-added', function (event, widget) {
-        initCwmWidgetControls(widget);
+        setTimeout(function () {
+            initTwimWidgetControls(widget);
+        }, 3000); // adjust delay if needed (200-500ms usually sufficient)
     });
 
 
     /* ----------------------------------------------------------------------------------------------------------------*/
     /*                                                 Disable logic if "disable" chosen
     /* ----------------------------------------------------------------------------------------------------------------*/
-    function toggleTWIMWrap($select) {
+    function toggleTwimWrap($select) {
         var $wrap = $select.closest('.twim-tabs').find('.twim-wrap');
         if (($select.val() === 'show') || ($select.val() === 'hide')) {
             $wrap.addClass('twim-disabled');
@@ -141,11 +144,11 @@
     }
 
     $('.twim-andor').each(function () {
-        toggleTWIMWrap($(this));
+        toggleTwimWrap($(this));
     });
 
     $(document).on('change', '.twim-andor', function () {
-        toggleTWIMWrap($(this));
+        toggleTwimWrap($(this));
     });
 
 

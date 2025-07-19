@@ -12,8 +12,7 @@ if (!defined('ABSPATH')) {
 * Version: 1.0
 * Author: WPol Studio
 * Author URI: https://wpolstudio.com
-* Text Domain: twim
-* Domain Path: ./languages
+* Domain Path: /languages
 * License: GPL2+
 */
 
@@ -24,7 +23,7 @@ add_action('init', function() {
 
 function twim_start_plugin() {
     // Load the plugin textdomain
-    load_plugin_textdomain('twim', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+    load_plugin_textdomain('tiny-widget-manager', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
     // Libraries
     require_once 'vendor/autoload.php';

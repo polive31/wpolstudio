@@ -1,7 +1,7 @@
 === Tiny Widget Manager ===
 Contributors: WPol Studio
 Donate link: https://ko-fi.com/wpolstudio
-Tags: widgets, visibility, admin, conditional, logic, translation-ready
+Tags: widgets, visibility, admin, logic, translation-ready
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 8.0

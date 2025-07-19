@@ -107,7 +107,7 @@ class TWIM_Hooks
         }
         $debug_html .= '</div>';
 
-        echo $debug_html;
+        echo esc_html($debug_html);
 
         return $instance;
     }
@@ -186,38 +186,38 @@ class TWIM_Hooks
     {
         $full_options = [
             'pages' => [
-                'title' => __('Pages', 'twim'),
-                'label' => __('on Pages...', 'twim'),
+                'title' => esc_html__('Pages', 'tiny-widget-manager'),
+                'label' => esc_html__('on Pages...', 'tiny-widget-manager'),
                 'items' => $this->pages,
             ],
             'posts' => [
-                'title' => __('Posts', 'twim'),
-                'label' => __('on posts of Type...', 'twim'),
+                'title' => esc_html__('Posts', 'tiny-widget-manager'),
+                'label' => esc_html__('on posts of Type...', 'tiny-widget-manager'),
                 'items' => $this->post_types,
             ],
             'archives' => [
-                'title' => __('Archives', 'twim'),
-                'label' => __('on Archives...', 'twim'),
+                'title' => esc_html__('Archives', 'tiny-widget-manager'),
+                'label' => esc_html__('on Archives...', 'tiny-widget-manager'),
                 'items' => $this->taxonomies,
             ],
             'roles' => [
-                'title' => __('Roles', 'twim'),
-                'label' => __('for User Roles...', 'twim'),
+                'title' => esc_html__('Roles', 'tiny-widget-manager'),
+                'label' => esc_html__('for User Roles...', 'tiny-widget-manager'),
                 'items' => [
-                    'logged_out'    => __('Logged-out', 'twim'),
-                    'logged_in'     => __('Logged-in', 'twim'),
-                    'administrator' => __('Admin', 'twim'),
-                    'editor'        => __('Editor', 'twim'),
-                    'subscriber'    => __('Subscriber', 'twim'),
+                    'logged_out'    => esc_html__('Logged-out', 'tiny-widget-manager'),
+                    'logged_in'     => esc_html__('Logged-in', 'tiny-widget-manager'),
+                    'administrator' => esc_html__('Admin', 'tiny-widget-manager'),
+                    'editor'        => esc_html__('Editor', 'tiny-widget-manager'),
+                    'subscriber'    => esc_html__('Subscriber', 'tiny-widget-manager'),
                 ],
             ],
             'devices' => [
-                'title' => __('Devices', 'twim'),
-                'label' => __('on devices...', 'twim'),
+                'title' => esc_html__('Devices', 'tiny-widget-manager'),
+                'label' => esc_html__('on devices...', 'tiny-widget-manager'),
                 'items' => [
-                    'desktop' => __('Computer', 'twim'),
+                    'desktop' => esc_html__('Computer', 'tiny-widget-manager'),
                     // 'tablet' => 'Tablette',
-                    'mobile' => __('Mobile', 'twim'),
+                    'mobile' => esc_html__('Mobile', 'tiny-widget-manager'),
                 ],
             ],
         ];
@@ -245,19 +245,21 @@ class TWIM_Hooks
 
         // Before tabs section (AND/OR input)
         $andor_value = $instance['twim_visibility_andor'] ?? 'and';
-        $andor_input = '<select name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_andor]" class="twim-andor">';
-        $andor_input .= '<option value="and"' . selected($andor_value, 'and', false) . '>' . __('Show if all conditions are met', 'twim') . '</option>';
-        $andor_input .= '<option value="or"' . selected($andor_value, 'or', false) . '>' . __('Show if any condition is met', 'twim') . '</option>';
-        $andor_input .= '<option value="show"' . selected($andor_value, 'show', false) . '>' . __('Always show', 'twim') . '</option>';
-        $andor_input .= '<option value="hide"' . selected($andor_value, 'hide', false) . '>' . __('Always hide', 'twim') . '</option>';
-        $andor_input .= '</select>';
 
         // Maybe set disable class
         $class_disable = in_array($andor_value, ['show', 'hide']) ? 'twim-disabled' : '';
 
         echo '<div class="twim-tabs">';
-        echo '<p class="twim-andor-wrap">' . $andor_input . '</p>';
-        echo '<div class="twim-wrap ' . $class_disable . '">';
+        echo '<p class="twim-andor-wrap">';
+        echo '<select name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_andor]" class="twim-andor">';
+        echo '<option value="and"' . selected($andor_value, 'and', false) . '>' . esc_html__('Show if all conditions are met', 'tiny-widget-manager') . '</option>';
+        echo '<option value="or"' . selected($andor_value, 'or', false) . '>' . esc_html__('Show if any condition is met', 'tiny-widget-manager') . '</option>';
+        echo '<option value="show"' . selected($andor_value, 'show', false) . '>' . esc_html__('Always show', 'tiny-widget-manager') . '</option>';
+        echo '<option value="hide"' . selected($andor_value, 'hide', false) . '>' . esc_html__('Always hide', 'tiny-widget-manager') . '</option>';
+        echo '</select>';
+        echo '</p>';
+
+        echo '<div class="twim-wrap ' . esc_attr($class_disable) . '">';
         echo '<ul class="twim-tab-nav">';
 
         // Display tabs for each section
@@ -292,7 +294,7 @@ class TWIM_Hooks
 
         // Display widget class input
         $class = $instance['twim_custom_classes'] ?? '';
-        echo '<div class="twim-label">' . __('CSS classes', 'twim') . ':</div>';
+        echo '<div class="twim-label">' . esc_html__('CSS classes', 'tiny-widget-manager') . ':</div>';
         echo '<input class="twim-widget-classes" type="text" name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_custom_classes]" value="' . esc_attr($class) . '" />';
 
         echo '</div></div>';
@@ -318,15 +320,15 @@ class TWIM_Hooks
         echo '<div class="twim-tab-content" data-tab="' . esc_attr($section) . '">';
 
         if ($pro) {
-            echo '<p class="twim-notice">' . __('This feature is only available on Tiny Manager Pro.', 'twim') . '</p>';
+            echo '<p class="twim-notice">' . esc_html__('This feature is only available on Tiny Manager Pro.', 'tiny-widget-manager') . '</p>';
         } else {
             // echo '<label>' . ucfirst($section) . ' :</label><br />';
-            echo '<select class="twim-selectize-showhide" name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_mode]" class="twim-mode">';
-            echo '<option value="hide"' . selected($mode_val, 'hide', false) . '>' . __('Hide ', 'twim') . esc_html($data['label']) . '</option>';
-            echo '<option value="show"' . selected($mode_val, 'show', false) . '>' . __('Show ', 'twim') . esc_html($data['label']) . '</option>';
+            echo '<select class="twim-showhide" name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_mode]" class="twim-mode">';
+            echo '<option value="show"' . selected($mode_val, 'show', false) . '>' . esc_html__('Show ', 'tiny-widget-manager') . esc_html($data['label']) . '</option>';
+            echo '<option value="hide"' . selected($mode_val, 'hide', false) . '>' . esc_html__('Hide ', 'tiny-widget-manager') . esc_html($data['label']) . '</option>';
             echo '</select><br />';
 
-            echo '<select multiple name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_items][]" class="twim-selectize ' . esc_attr($autocomplete_class) . '" placeholder="' . esc_attr(__('Select items...', 'twim')) . '">';
+            echo '<select multiple name="widget-' . esc_attr($widget->id_base) . '[' . esc_attr($widget->number) . '][twim_visibility_' . esc_attr($section) . '_items][]" class="twim-selectize ' . esc_attr($autocomplete_class) . '" placeholder="' . esc_attr(esc_html__('Select items...', 'tiny-widget-manager')) . '">';
             foreach ($data['items'] as $value => $label) {
                 $selected = in_array($value, $items_val) ? 'selected' : '';
                 $level = str_contains($value, ':') ? '1' : '0';
@@ -406,11 +408,11 @@ class TWIM_Hooks
     {
 
         $archives = [];
-        $archives['all'] = __('Any Archive', 'twim');
+        $archives['all'] = esc_html__('Any Archive', 'tiny-widget-manager');
         foreach ($this->post_types as $post_type => $label) {
             $archives[$post_type] = ucfirst($label);
         }
-        $archives['author'] = __('Author', 'twim');
+        $archives['author'] = esc_html__('Author', 'tiny-widget-manager');
 
 
         $taxonomies = get_taxonomies(
@@ -545,7 +547,7 @@ class TWIM_Hooks
         if (!get_option('twim_disable_block_editor')) {
             echo '<div class="notice notice-warning is-dismissible">';
             // translators: %s: URL to Tiny Widget Manager settings page.
-            echo '<p>' . sprintf(__('<strong>Notice:</strong> Tiny Widget Manager will not be operational because the block-based widget editor is currently <strong>enabled</strong>. You can disable it in <a href="%s">Tiny Widget Manager settings</a>', 'twim'),  esc_url(admin_url('options-general.php?page=twim-settings'))) . '.</p>';
+            echo '<p>' . sprintf(esc_html__('<strong>Notice:</strong> Tiny Widget Manager will not be operational because the block-based widget editor is currently <strong>enabled</strong>. You can disable it in <a href="%s">Tiny Widget Manager settings</a>', 'tiny-widget-manager'),  esc_url(admin_url('options-general.php?page=twim-settings'))) . '.</p>';
             echo '</div>';
         }
     }
